@@ -6,21 +6,23 @@ public class God : MonoBehaviour
 {
     private static God instance;
 
+    [Header("Text Display")]
     [SerializeField]
     TMPro.TMP_Text godtext;
-
     [SerializeField]
     string[] randomlines;
     string curline;
     string display;
-
     [SerializeField]
     float txtdelay = 0.1f;
-
     [SerializeField]
     float randomtxttime = 10.0f;
     float timer;
     bool displaying;
+
+    [Header("Gravity Control")]
+    [SerializeField]
+    Rigidbody2D[] moveobjs;
 
     private God()
     {
@@ -40,13 +42,17 @@ public class God : MonoBehaviour
         displaying = false;
         godtext.text = "";
         timer = randomtxttime;
+
+        moveobjs = FindObjectsOfType<Rigidbody2D>();
     }
 
     void Update()
     {
         //Test
-        if (Input.GetKeyDown(KeyCode.H))
+        if (Input.GetKeyDown(KeyCode.H)) {
             SetText("OOF");
+            ReverseGravity();
+        }
 
         timer -= Time.deltaTime;
 
@@ -76,5 +82,12 @@ public class God : MonoBehaviour
         godtext.text = "";
         displaying = false;
         timer = randomtxttime;
+    }
+
+    public void ReverseGravity()
+    {
+        foreach(Rigidbody2D b in moveobjs) {
+            b.gravityScale *= -1;
+        }
     }
 }
