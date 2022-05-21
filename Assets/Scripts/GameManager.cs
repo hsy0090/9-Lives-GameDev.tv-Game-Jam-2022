@@ -62,7 +62,6 @@ public class GameManager : MonoBehaviour
 
     private GameManager()
     {
-
     }
 
     public static GameManager Instance
