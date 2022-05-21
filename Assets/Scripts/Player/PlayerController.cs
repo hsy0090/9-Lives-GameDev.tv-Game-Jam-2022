@@ -66,7 +66,9 @@ public class PlayerController : MonoBehaviour
         if (collision.gameObject.tag == "Killzone")
         {
             transform.position = respawn.transform.position;
-            God.Instance.SetText("Ooh I don't think so");
+
+            if(God.Instance)
+                God.Instance.SetText("Ooh I don't think so");
         }
     }
 }
