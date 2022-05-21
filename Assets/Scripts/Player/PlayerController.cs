@@ -21,10 +21,12 @@ public class PlayerController : MonoBehaviour
     LayerMask platformLayerMask;
     public bool grounded;
     Rigidbody2D rb2d;
+    Animator animator;
 
     void Start()
     {
         rb2d = transform.GetComponent<Rigidbody2D>();
+        animator = GetComponent<Animator>();
         curjumpforce = 0.0f;
         grounded = false;
     }
@@ -48,7 +50,22 @@ public class PlayerController : MonoBehaviour
         }
 
         transform.Translate(Input.GetAxis("Horizontal") * Time.deltaTime * movespeed, 0, 0);
-    #endregion
+        #endregion
+
+        animator.SetFloat("X Axis", Input.GetAxis("Horizontal"));
+        animator.SetFloat("JumpForce", curjumpforce);
+        animator.SetFloat("Speed", Mathf.Abs(Input.GetAxis("Horizontal")) * 10);
+
+        if (Input.GetAxis("Horizontal") > 0)
+        {
+            animator.SetBool("LastFacingRight", true);
+            animator.SetBool("LastFacingLeft", false);
+        }
+        else if (Input.GetAxis("Horizontal") < 0)
+        {
+            animator.SetBool("LastFacingRight", false);
+            animator.SetBool("LastFacingLeft", true);
+        }
     }
 
     private void OnCollisionStay2D(Collision2D collision)
