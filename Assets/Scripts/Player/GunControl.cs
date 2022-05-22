@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GunControl : MonoBehaviour
 {
@@ -14,6 +15,7 @@ public class GunControl : MonoBehaviour
     //---------------------------------------------
     bool Fired = false;
     GameObject bullet;
+    
     //---------------------------------------------
     // PUBLIC, SHOW in unity inspector
     //---------------------------------------------
@@ -29,6 +31,9 @@ public class GunControl : MonoBehaviour
 
     [SerializeField]
     GameObject bulletSpawn;
+
+    [SerializeField]
+    GameObject Controller;
 
     [SerializeField]
     Vector3 trajectory;
@@ -51,13 +56,26 @@ public class GunControl : MonoBehaviour
         float angle = Mathf.Atan2(mousePos.y, mousePos.x) * Mathf.Rad2Deg;
         Pivot.rotation = Quaternion.Euler(new Vector3(0, 0, angle));
 
-        if (Input.GetMouseButtonDown(0) && !Fired)
+        if (Input.GetMouseButtonDown(0) && !Fired && (Controller.GetComponent<AmmoControl>().Magazine.Count > 0))
         {
             Debug.Log("BUTTON PRESSED");
-            bullet = Instantiate(bulletPrefab, bulletSpawn.transform.position, bulletSpawn.GetComponentInParent<Transform>().rotation);
-            trajectory = new Vector3(1, 0 ,0).normalized;
-            bullet.GetComponent<BulletBehavior>().trajectory = trajectory;
-            Fired = true;
+            if (Controller.GetComponent<AmmoControl>().Magazine[Controller.GetComponent<AmmoControl>().currentSlot] != null)
+            {
+                bullet = Instantiate(Controller.GetComponent<AmmoControl>().Magazine[Controller.GetComponent<AmmoControl>().currentSlot]
+                    , bulletSpawn.transform.position, bulletSpawn.GetComponentInParent<Transform>().rotation);
+
+                Controller.GetComponent<AmmoControl>().Magazine[Controller.GetComponent<AmmoControl>().currentSlot] = null;
+                Controller.GetComponent<AmmoControl>().MagazineSlot[Controller.GetComponent<AmmoControl>()
+                    .currentSlot].GetComponent<Image>().enabled = false;
+                //RemoveAt(Controller.GetComponent<AmmoControl>().currentSlot);
+
+                trajectory = new Vector3(1, 0, 0).normalized;
+                bullet.GetComponent<BulletBehavior>().trajectory = trajectory;
+                
+                Fired = true;
+            }
+            Controller.GetComponent<AmmoControl>().currentSlot++;
+            Controller.transform.rotation = Quaternion.Euler(new Vector3(0, 0, Controller.transform.rotation.eulerAngles.z - 60));
         }
         else if (Input.GetMouseButtonUp(0) && Fired)
         {

@@ -52,7 +52,7 @@ public class PlayerController : MonoBehaviour
         transform.Translate(Input.GetAxis("Horizontal") * Time.deltaTime * movespeed, 0, 0);
         #endregion
 
-        animator.SetFloat("X Axis", Input.GetAxis("Horizontal"));
+/*        animator.SetFloat("X Axis", Input.GetAxis("Horizontal"));
         animator.SetFloat("JumpForce", curjumpforce);
         animator.SetFloat("Speed", Mathf.Abs(Input.GetAxis("Horizontal")) * 10);
 
@@ -65,7 +65,7 @@ public class PlayerController : MonoBehaviour
         {
             animator.SetBool("LastFacingRight", false);
             animator.SetBool("LastFacingLeft", true);
-        }
+        }*/
     }
 
     private void OnCollisionStay2D(Collision2D collision)
