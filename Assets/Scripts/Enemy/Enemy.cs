@@ -4,10 +4,18 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
+    enum States
+    {
+        IDLE,
+        PATROL,
+        ATTACK,
+        CONTROLLED
+    }
+    States state;
+
+    [Header("Movement")]
     [SerializeField]
     float movespeed = 2.5f;
-    Rigidbody2D rb2d;
-    bool turn = false;
 
     [SerializeField]
     Waypoints path;
@@ -15,24 +23,66 @@ public class Enemy : MonoBehaviour
     Transform target;
     bool back = false;
 
+    [Header("Combat")]
+    [SerializeField]
+    Transform Pivot;
+    [SerializeField]
+    GameObject bulletPrefab;
+    [SerializeField]
+    GameObject bulletSpawn;
+    [SerializeField]
+    float shootdelay = 5.0f;
+    float shoottimer;
+    GameObject bullet;
+
+    [Header("God Control")]
+    [SerializeField]
+    GameObject Controldisplay;
+    [SerializeField]
+    [Range(0.0f, 1.0f)]
+    float percentchance = 0.5f;
+    bool controlled = false;
+    [SerializeField]
+    List<Enemy> allies;
+
     void Start()
     {
-        rb2d = transform.GetComponent<Rigidbody2D>();
+        Controldisplay.SetActive(false);
 
         if (path != null) {
             target = path.points[0];
         }
+
+        state = States.PATROL;
+        shoottimer = shootdelay;
     }
 
     void Update()
     {
-        if (path != null) {
-            Patrol();
-        }
-    }
 
-    private void FixedUpdate()
-    {
+        switch (state) {
+
+            case States.IDLE:
+                break;
+
+            case States.PATROL:
+                if (path != null) {
+                    Patrol();
+                }
+                break;
+
+            case States.ATTACK:
+                Attack();
+                break;
+
+            case States.CONTROLLED:
+                Controlled();
+                break;
+
+            default:
+                break;
+
+        }
     }
 
     void Patrol()
@@ -44,6 +94,53 @@ public class Enemy : MonoBehaviour
         if (Vector2.Distance(transform.position, target.position) <= 0.4f)
         {
             GetNextWaypoint();
+        }
+    }
+
+    void Attack()
+    {
+        shoottimer -= Time.deltaTime;
+        Vector2 dir = target.position - transform.position;
+
+        float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+        Pivot.rotation = Quaternion.Euler(new Vector3(0, 0, angle));
+
+        if (shoottimer <= 0.0f) {
+            bullet = Instantiate(bulletPrefab, bulletSpawn.transform.position, bulletSpawn.GetComponentInParent<Transform>().rotation);
+            
+            dir = new Vector3(1, 0, 0).normalized;
+            bullet.GetComponent<BulletBehavior>().trajectory = dir;
+            
+            shoottimer = shootdelay;
+        }
+    }
+
+    void Controlled()
+    {
+        Controldisplay.SetActive(true);
+
+        if (!target && allies.Count > 0)
+        {
+            target = allies[0].gameObject.transform;
+        }
+        else if (!target && allies.Count <= 0)
+            return;
+
+        shoottimer -= Time.deltaTime;
+
+        Vector2 dir = target.position - transform.position;
+
+        float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+        Pivot.rotation = Quaternion.Euler(new Vector3(0, 0, angle));
+
+        if (shoottimer <= 0.0f)
+        {
+            bullet = Instantiate(bulletPrefab, bulletSpawn.transform.position, bulletSpawn.GetComponentInParent<Transform>().rotation);
+
+            dir = new Vector3(1, 0, 0).normalized;
+            bullet.GetComponent<BulletBehavior>().trajectory = dir;
+
+            shoottimer = shootdelay;
         }
     }
 
@@ -78,5 +175,42 @@ public class Enemy : MonoBehaviour
         }
 
         target = path.points[pathnodeid];
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject != gameObject && collision.gameObject.tag == "Mob" 
+            && !allies.Contains(collision.gameObject.GetComponent<Enemy>()))
+        {
+            allies.Add(collision.gameObject.GetComponent<Enemy>());
+        }
+        
+        if (collision.gameObject.tag == "Player" && !controlled)
+        {
+            target = collision.transform;
+
+            state = States.ATTACK;
+
+            if (Random.value <= percentchance)
+            {
+                controlled = true;
+                state = States.CONTROLLED;
+                target = null;
+                return;
+            }
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == "Player" && !controlled)
+        {
+            if (path != null)
+            {
+                target = path.points[0];
+            }
+
+            state = States.PATROL;
+        }
     }
 }
