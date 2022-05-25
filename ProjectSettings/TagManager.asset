@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 2
   tags:
   - Killzone
+  - Bullet
   layers:
   - Default
   - TransparentFX
