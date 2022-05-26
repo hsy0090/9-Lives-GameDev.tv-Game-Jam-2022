@@ -108,6 +108,15 @@ public class PlayerController : MonoBehaviour
         }*/
     }
 
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Bullet") && !collision.gameObject.GetComponent<BulletBehavior>().player)
+        {
+            health.GetComponent<Health>().dealDamage(5, collision.gameObject.tag);
+            Destroy(collision.gameObject);
+        }
+    }
+
     private void OnCollisionStay2D(Collision2D collision)
     {
         grounded = collision != null && (((1 << collision.gameObject.layer) & platformLayerMask) != 0);
@@ -133,11 +142,7 @@ public class PlayerController : MonoBehaviour
             onfire = false;
             fire.SetActive(false);
         }
-        if (collision.gameObject.CompareTag("Bullet") && !collision.gameObject.GetComponent<BulletBehavior>().player)
-        {
-            health.GetComponent<Health>().dealDamage(5, collision.gameObject.tag);
-            Destroy(collision.gameObject);
-        }
+        
     }
 
     IEnumerator Jump()

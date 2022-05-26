@@ -108,7 +108,7 @@ public class Enemy : MonoBehaviour
         if (shoottimer <= 0.0f) {
             bullet = Instantiate(bulletPrefab, bulletSpawn.transform.position, bulletSpawn.GetComponentInParent<Transform>().rotation);
             
-            dir = new Vector3(1, 0, 0).normalized;
+            dir.Normalize();
             bullet.GetComponent<BulletBehavior>().trajectory = dir;
             
             shoottimer = shootdelay;
@@ -119,11 +119,19 @@ public class Enemy : MonoBehaviour
     {
         Controldisplay.SetActive(true);
 
-        if (!target && allies.Count > 0)
+        if (!target && allies.Count <= 0)
+            return;
+
+        for (int i = 0; i < allies.Count; i++)
         {
-            target = allies[0].gameObject.transform;
+            if(allies[i] != null)
+            {
+                target = allies[i].gameObject.transform;
+                break;
+            }
         }
-        else if (!target && allies.Count <= 0)
+
+        if (target == null)
             return;
 
         shoottimer -= Time.deltaTime;
@@ -137,8 +145,9 @@ public class Enemy : MonoBehaviour
         {
             bullet = Instantiate(bulletPrefab, bulletSpawn.transform.position, bulletSpawn.GetComponentInParent<Transform>().rotation);
 
-            dir = new Vector3(1, 0, 0).normalized;
+            dir.Normalize();
             bullet.GetComponent<BulletBehavior>().trajectory = dir;
+            bullet.layer = LayerMask.NameToLayer("PlayerProjectiles");
 
             shoottimer = shootdelay;
         }
@@ -202,7 +211,7 @@ public class Enemy : MonoBehaviour
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag("Bullet") && collision.gameObject.GetComponent<BulletBehavior>().player)
+        if (collision.gameObject.CompareTag("Bullet") && !controlled)
         {
             Destroy(gameObject);
             Destroy(collision.gameObject);
