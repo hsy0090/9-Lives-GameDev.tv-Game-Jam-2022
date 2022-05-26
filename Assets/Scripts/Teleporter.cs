@@ -96,27 +96,7 @@ public class Teleporter : MonoBehaviour
     }
     private void OnTriggerStay2D(Collider2D collision)
     {
-        /*if (TeleportActivated)
-        {
-            if (collision.gameObject.CompareTag("Player"))
-            {
-                Debug.Log("Active");
-                if (UpTeleportIcon.GetComponent<SpriteRenderer>().enabled && 
-                    Input.GetKey(KeyCode.UpArrow) && 
-                    UpTeleporter.GetComponent<Teleporter>().GetStatus())
-                {
-                    Debug.Log("teleport up");
-                    collision.gameObject.transform.position = UpTeleporter.transform.position;
-                }
-                if (DownTeleportIcon.GetComponent<SpriteRenderer>().enabled && 
-                    Input.GetKey(KeyCode.DownArrow) && 
-                    DownTeleporter.GetComponent<Teleporter>().GetStatus())
-                {
-                    Debug.Log("teleport down");
-                    collision.gameObject.transform.position = DownTeleporter.transform.position;
-                }
-            }
-        }*/
+
     }
     bool GetStatus()
     {

@@ -69,7 +69,7 @@ public class GunControl : MonoBehaviour
                     .currentSlot].GetComponent<Image>().enabled = false;
                 //RemoveAt(Controller.GetComponent<AmmoControl>().currentSlot);
 
-                trajectory = new Vector3(1, 0, 0).normalized;
+                trajectory = mousePos.normalized;
                 bullet.GetComponent<BulletBehavior>().trajectory = trajectory;
                 bullet.GetComponent<BulletBehavior>().player = true;
                 Fired = true;

@@ -32,17 +32,13 @@ public class Stalactite : MonoBehaviour
     {
         
     }
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Bullet"))
         {
             this.gameObject.GetComponent<Rigidbody2D>().gravityScale = 1;
             activated = true;
         }
-
-    }
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
         if (activated && collision.gameObject.CompareTag("Player"))
         {
             FindObjectOfType<Lives>().Death("Stalactite");
