@@ -200,10 +200,10 @@ public class Enemy : MonoBehaviour
             }
         }
 
-/*        if (collision.gameObject.CompareTag("Bullet"))
+        if (collision.gameObject.CompareTag("Bullet"))
         {
             Destroy(gameObject);
-        }*/
+        }
     }
 
     private void OnTriggerExit2D(Collider2D collision)

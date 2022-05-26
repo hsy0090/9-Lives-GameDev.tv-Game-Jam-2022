@@ -119,8 +119,11 @@ public class God : MonoBehaviour
     void Record()
     {
         foreach (TimeObj b in moveobjs) {
-            b.rewinding = false;
-            b.reversepos.Insert(0, b.transform.position);
+            if (b != null)
+            {
+                b.rewinding = false;
+                b.reversepos.Insert(0, b.transform.position);
+            }
         }
     }
 
