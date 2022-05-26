@@ -29,13 +29,16 @@ public class BulletBehavior : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        if (player)
+        {
+            gameObject.layer = LayerMask.NameToLayer("PlayerProjectiles");
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
-        transform.Translate(trajectory * BulletSpeed * Time.deltaTime);
+        transform.position += trajectory * BulletSpeed * Time.deltaTime;
     }
     void OnBecameInvisible()
     {

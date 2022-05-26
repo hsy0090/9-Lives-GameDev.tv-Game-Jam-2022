@@ -199,7 +199,9 @@ public class Enemy : MonoBehaviour
                 return;
             }
         }
-
+    }
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
         if (collision.gameObject.CompareTag("Bullet") && collision.gameObject.GetComponent<BulletBehavior>().player)
         {
             Destroy(gameObject);
