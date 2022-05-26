@@ -11,7 +11,7 @@ public class Stalactite : MonoBehaviour
     //---------------------------------------------
     // PRIVATE, NOT in unity inspector
     //---------------------------------------------
-
+    bool activated = false;
     //---------------------------------------------
     // PUBLIC, SHOW in unity inspector
     //---------------------------------------------
@@ -19,7 +19,8 @@ public class Stalactite : MonoBehaviour
     //---------------------------------------------
     // PRIVATE [SF], SHOW in unity inspector
     //---------------------------------------------
-
+    [SerializeField]
+    LayerMask platformLayerMask;
     // Start is called before the first frame update
     void Start()
     {
@@ -36,6 +37,20 @@ public class Stalactite : MonoBehaviour
         if (collision.gameObject.CompareTag("Bullet"))
         {
             this.gameObject.GetComponent<Rigidbody2D>().gravityScale = 1;
+            activated = true;
         }
+
+    }
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (activated && collision.gameObject.CompareTag("Player"))
+        {
+            FindObjectOfType<Lives>().Death("Stalactite");
+        }
+        if (activated && (((1 << collision.gameObject.layer) & platformLayerMask) != 0))
+        {
+            Destroy(gameObject);
+        }
+
     }
 }

@@ -19,7 +19,7 @@ public class BulletBehavior : MonoBehaviour
     //---------------------------------------------
     // PUBLIC, SHOW in unity inspector
     //---------------------------------------------
-    
+    public bool player = false;
     //---------------------------------------------
     // PRIVATE [SF], SHOW in unity inspector
     //---------------------------------------------

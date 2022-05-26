@@ -133,7 +133,7 @@ public class PlayerController : MonoBehaviour
             onfire = false;
             fire.SetActive(false);
         }
-        if (collision.gameObject.CompareTag("Bullet"))
+        if (collision.gameObject.CompareTag("Bullet") && !collision.gameObject.GetComponent<BulletBehavior>().player)
         {
             health.GetComponent<Health>().dealDamage(5, collision.gameObject.tag);
         }

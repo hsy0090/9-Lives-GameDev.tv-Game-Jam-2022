@@ -71,7 +71,7 @@ public class GunControl : MonoBehaviour
 
                 trajectory = new Vector3(1, 0, 0).normalized;
                 bullet.GetComponent<BulletBehavior>().trajectory = trajectory;
-                
+                bullet.GetComponent<BulletBehavior>().player = true;
                 Fired = true;
             }
             Controller.GetComponent<AmmoControl>().currentSlot++;
