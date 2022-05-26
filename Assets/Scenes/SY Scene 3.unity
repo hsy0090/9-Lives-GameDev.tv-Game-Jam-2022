@@ -3286,6 +3286,8 @@ MonoBehaviour:
   playerlayer: 6
   platformlayer: 9
   jumping: 0
+  health: {fileID: 0}
+  life: {fileID: 0}
 --- !u!50 &841865447
 Rigidbody2D:
   serializedVersion: 4
@@ -41598,6 +41600,7 @@ MonoBehaviour:
   fullHeart: {fileID: 21300000, guid: f8a4683d2e5b218479018d9d38aaf748, type: 3}
   emptyHeart: {fileID: 21300000, guid: 3b47aa40d328a334b84bb220487b4091, type: 3}
   HeartGap: 5
+  Life: {fileID: 0}
 --- !u!222 &2138603004
 CanvasRenderer:
   m_ObjectHideFlags: 0

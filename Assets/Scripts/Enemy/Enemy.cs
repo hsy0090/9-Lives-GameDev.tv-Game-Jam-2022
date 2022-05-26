@@ -199,11 +199,10 @@ public class Enemy : MonoBehaviour
                 return;
             }
         }
-
-/*        if (collision.gameObject.CompareTag("Bullet"))
+        if (collision.gameObject.CompareTag("Bullet") && collision.gameObject.GetComponent<BulletBehavior>().player)
         {
             Destroy(gameObject);
-        }*/
+        }
     }
 
     private void OnTriggerExit2D(Collider2D collision)
