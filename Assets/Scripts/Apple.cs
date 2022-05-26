@@ -2,46 +2,64 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BulletBehavior : MonoBehaviour
+public class Apple : MonoBehaviour
 {
     //---------------------------------------------
     // PUBLIC [S.NS], NOT in unity inspector         
     //---------------------------------------------
-    [System.NonSerialized]
-    public float BulletSpeed = 5;
 
-    [System.NonSerialized]
-    public Vector3 trajectory;
     //---------------------------------------------
     // PRIVATE, NOT in unity inspector
     //---------------------------------------------
-
+    
+    bool RunTimer = false;
     //---------------------------------------------
     // PUBLIC, SHOW in unity inspector
     //---------------------------------------------
-    
+
     //---------------------------------------------
     // PRIVATE [SF], SHOW in unity inspector
     //---------------------------------------------
+    [SerializeField]
+    float Timer;
 
+    [SerializeField]
+    float TimerInit = 60;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        Timer = TimerInit;
+        this.gameObject.GetComponent<Rigidbody2D>().gravityScale = 0;
     }
 
     // Update is called once per frame
     void Update()
     {
-        transform.Translate(trajectory * BulletSpeed * Time.deltaTime);
+        if (RunTimer)
+        {
+            Timer -= Time.deltaTime;
+            if(Timer <= 0)
+            {
+                this.gameObject.GetComponent<Rigidbody2D>().gravityScale = 1;
+                RunTimer = false;
+            }
+        }
     }
-    void OnBecameInvisible()
+    void StartTimer()
     {
-        Destroy(gameObject);
+        RunTimer = true;
     }
-/*    private void OnTriggerEnter2D(Collider2D collision)
+    void ResetTimer()
     {
-        Destroy(gameObject);
-    }*/
+        Timer = TimerInit;
+        RunTimer = false;
+    }
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("Bullet"))
+        {
+            StartTimer();
+        }
+    }
 }
