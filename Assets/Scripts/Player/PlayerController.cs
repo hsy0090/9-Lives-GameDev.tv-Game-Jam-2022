@@ -55,7 +55,7 @@ public class PlayerController : MonoBehaviour
             fire.SetActive(true);
         }
 
-        if (Input.GetButtonDown("Jump") && (Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow)) && !jumping)
+        if ((Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow)) && Input.GetButtonDown("Jump") && !jumping)
         {
             StartCoroutine("Jump");
         }
@@ -133,7 +133,7 @@ public class PlayerController : MonoBehaviour
     {
         jumping = true;
         Physics2D.IgnoreLayerCollision(playerlayer, platformlayer, true);
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(1.0f);
         Physics2D.IgnoreLayerCollision(playerlayer, platformlayer, false);
         jumping = false;
     }

@@ -24,7 +24,7 @@ public class God : MonoBehaviour
     [SerializeField]
     GameObject timeicon;
     [SerializeField]
-    Rigidbody2D[] moveobjs;
+    TimeObj[] moveobjs;
     [SerializeField]
     float reversaltime = 2.5f;
     bool reversetime = false;
@@ -49,7 +49,7 @@ public class God : MonoBehaviour
         godtext.text = "";
         timer = randomtxttime;
 
-        moveobjs = FindObjectsOfType<Rigidbody2D>();
+        moveobjs = FindObjectsOfType<TimeObj>();
         reversetime = false;
         timeicon.SetActive(false);
     }
@@ -111,28 +111,28 @@ public class God : MonoBehaviour
 
     public void ReverseGravity()
     {
-        foreach(Rigidbody2D b in moveobjs) {
-            b.gravityScale *= -1;
+        foreach(TimeObj b in moveobjs) {
+            b.GetComponent<Rigidbody2D>().gravityScale *= -1;
         }
     }
 
     void Record()
     {
-        foreach (Rigidbody2D b in moveobjs) {
-            b.gameObject.GetComponent<TimeObj>().rewinding = false;
-            b.gameObject.GetComponent<TimeObj>().reversepos.Insert(0, b.transform.position);
+        foreach (TimeObj b in moveobjs) {
+            b.rewinding = false;
+            b.reversepos.Insert(0, b.transform.position);
         }
     }
 
     public void Rewind()
     {
-        foreach (Rigidbody2D b in moveobjs) {
+        foreach (TimeObj b in moveobjs) {
 
-            b.gameObject.GetComponent<TimeObj>().rewinding = true; 
-            if (b.GetComponent<TimeObj>().reversepos.Count > 0)
+            b.rewinding = true; 
+            if (b.reversepos.Count > 0)
             {
-                b.GetComponent<TimeObj>().transform.position = b.GetComponent<TimeObj>().reversepos[0];
-                b.GetComponent<TimeObj>().reversepos.RemoveAt(0);
+                b.transform.position = b.reversepos[0];
+                b.reversepos.RemoveAt(0);
             }
         }
 
