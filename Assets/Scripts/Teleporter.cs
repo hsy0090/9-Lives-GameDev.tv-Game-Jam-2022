@@ -33,6 +33,9 @@ public class Teleporter : MonoBehaviour
 
     [SerializeField]
     GameObject DownTeleportIcon;
+
+    bool playerinside = false;
+    GameObject player;
     // Start is called before the first frame update
     void Start()
     {
@@ -42,7 +45,23 @@ public class Teleporter : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if(playerinside && TeleportActivated)
+        {
+            if (UpTeleportIcon.GetComponent<SpriteRenderer>().enabled &&
+                    Input.GetKeyDown(KeyCode.UpArrow) &&
+                    UpTeleporter.GetComponent<Teleporter>().GetStatus())
+            {
+                Debug.Log("teleport up");
+                player.transform.position = UpTeleporter.transform.position;
+            }
+            if (DownTeleportIcon.GetComponent<SpriteRenderer>().enabled &&
+                Input.GetKeyDown(KeyCode.DownArrow) &&
+                DownTeleporter.GetComponent<Teleporter>().GetStatus())
+            {
+                Debug.Log("teleport down");
+                player.transform.position = DownTeleporter.transform.position;
+            }
+        }
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -60,6 +79,9 @@ public class Teleporter : MonoBehaviour
             {
                 DownTeleportIcon.GetComponent<SpriteRenderer>().enabled = true;
             }
+
+            player = collision.gameObject;
+            playerinside = true;
         }
     }
     private void OnTriggerExit2D(Collider2D collision)
@@ -68,32 +90,33 @@ public class Teleporter : MonoBehaviour
         {
             UpTeleportIcon.GetComponent<SpriteRenderer>().enabled = false;
             DownTeleportIcon.GetComponent<SpriteRenderer>().enabled = false;
+            playerinside = false;
         }
 
     }
     private void OnTriggerStay2D(Collider2D collision)
     {
-        if (TeleportActivated)
+        /*if (TeleportActivated)
         {
             if (collision.gameObject.CompareTag("Player"))
             {
                 Debug.Log("Active");
                 if (UpTeleportIcon.GetComponent<SpriteRenderer>().enabled && 
-                    Input.GetKeyDown(KeyCode.UpArrow) && 
+                    Input.GetKey(KeyCode.UpArrow) && 
                     UpTeleporter.GetComponent<Teleporter>().GetStatus())
                 {
                     Debug.Log("teleport up");
                     collision.gameObject.transform.position = UpTeleporter.transform.position;
                 }
                 if (DownTeleportIcon.GetComponent<SpriteRenderer>().enabled && 
-                    Input.GetKeyDown(KeyCode.DownArrow) && 
+                    Input.GetKey(KeyCode.DownArrow) && 
                     DownTeleporter.GetComponent<Teleporter>().GetStatus())
                 {
                     Debug.Log("teleport down");
                     collision.gameObject.transform.position = DownTeleporter.transform.position;
                 }
             }
-        }
+        }*/
     }
     bool GetStatus()
     {
