@@ -29,6 +29,9 @@ public class Health : MonoBehaviour
     //---------------------------------------------
     [SerializeField]
     float HeartGap = 5;
+
+    [SerializeField]
+    GameObject Life;
     // Start is called before the first frame update
     void Start()
     {
@@ -59,8 +62,6 @@ public class Health : MonoBehaviour
         //hp check
         for (int i = 0; i < hearts.Count; i++)
         {
-
-            
             if (i < health)
             {
 
@@ -73,5 +74,16 @@ public class Health : MonoBehaviour
 
         }
 
+    }
+    public void dealDamage(int damage, string damagetype)
+    {
+        //if (!Life.GetComponent<Lives>().deathTag.Contains(damagetype))
+        //{
+                health -= damage;
+                if (health <= 0)
+                {
+                    Life.GetComponent<Lives>().Death(damagetype);
+                }
+        //}
     }
 }

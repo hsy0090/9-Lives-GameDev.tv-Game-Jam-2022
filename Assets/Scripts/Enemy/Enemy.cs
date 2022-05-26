@@ -199,6 +199,11 @@ public class Enemy : MonoBehaviour
                 return;
             }
         }
+
+/*        if (collision.gameObject.CompareTag("Bullet"))
+        {
+            Destroy(gameObject);
+        }*/
     }
 
     private void OnTriggerExit2D(Collider2D collision)

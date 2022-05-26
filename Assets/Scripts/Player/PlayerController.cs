@@ -34,6 +34,12 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     bool jumping = false;
 
+    [SerializeField]
+    GameObject health;
+
+    [SerializeField]
+    GameObject life;
+
     Animator animator;
 
     void Start()
@@ -127,6 +133,10 @@ public class PlayerController : MonoBehaviour
             onfire = false;
             fire.SetActive(false);
         }
+        if (collision.gameObject.CompareTag("Bullet"))
+        {
+            health.GetComponent<Health>().dealDamage(5, collision.gameObject.tag);
+        }
     }
 
     IEnumerator Jump()
@@ -136,5 +146,10 @@ public class PlayerController : MonoBehaviour
         yield return new WaitForSeconds(1.0f);
         Physics2D.IgnoreLayerCollision(playerlayer, platformlayer, false);
         jumping = false;
+    }
+
+    public void Respawn()
+    {
+        transform.position = respawn.transform.position;
     }
 }
