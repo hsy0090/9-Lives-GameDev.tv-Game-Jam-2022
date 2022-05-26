@@ -8,6 +8,11 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     Transform respawn;
 
+    [System.NonSerialized]
+    public bool onfire = false;
+    [SerializeField]
+    GameObject fire;
+
     [Header("Movement")]
     [SerializeField]
     float movespeed = 2.5f;
@@ -21,6 +26,14 @@ public class PlayerController : MonoBehaviour
     LayerMask platformLayerMask;
     public bool grounded;
     Rigidbody2D rb2d;
+
+    [SerializeField]
+    int playerlayer;
+    [SerializeField]
+    int platformlayer;
+    [SerializeField]
+    bool jumping = false;
+
     Animator animator;
 
     void Start()
@@ -29,25 +42,46 @@ public class PlayerController : MonoBehaviour
         animator = GetComponent<Animator>();
         curjumpforce = 0.0f;
         grounded = false;
+        fire.SetActive(false);
     }
 
     void Update()
     {
         
+        //test fire
+        if(Input.GetKeyDown(KeyCode.J))
+        {
+            onfire = true;
+            fire.SetActive(true);
+        }
+
+        if (Input.GetButtonDown("Jump") && (Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow)) && !jumping)
+        {
+            StartCoroutine("Jump");
+        }
+        else if (Input.GetButton("Jump") && grounded && !jumping)
+        {
+            curjumpforce = jumpforce;
+            rb2d.velocity = Vector2.up * curjumpforce;
+            StartCoroutine("Jump");
+        }
+        else
+        {
+            curjumpforce = 0.0f;
+        }
+
+        if (rb2d.velocity.y > 0)
+            Physics2D.IgnoreLayerCollision(playerlayer, platformlayer, true);
+
+        else if (rb2d.velocity.y <= 0 && !jumping)
+            Physics2D.IgnoreLayerCollision(playerlayer, platformlayer, false);
     }
 
     private void FixedUpdate()
     {
 
-    #region Input
-        if (Input.GetButton("Jump") && grounded)
-        {
-            curjumpforce = jumpforce;
-            rb2d.velocity = Vector2.up * curjumpforce;
-        }
-        else {
-            curjumpforce = 0.0f;
-        }
+        #region Input
+       
 
         transform.Translate(Input.GetAxis("Horizontal") * Time.deltaTime * movespeed, 0, 0);
         #endregion
@@ -87,5 +121,20 @@ public class PlayerController : MonoBehaviour
             if(God.Instance)
                 God.Instance.SetText("Ooh I don't think so");
         }
+
+        if(collision.gameObject.tag == "Water")
+        {
+            onfire = false;
+            fire.SetActive(false);
+        }
+    }
+
+    IEnumerator Jump()
+    {
+        jumping = true;
+        Physics2D.IgnoreLayerCollision(playerlayer, platformlayer, true);
+        yield return new WaitForSeconds(0.5f);
+        Physics2D.IgnoreLayerCollision(playerlayer, platformlayer, false);
+        jumping = false;
     }
 }
