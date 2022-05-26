@@ -23,7 +23,8 @@ public class BulletBehavior : MonoBehaviour
     //---------------------------------------------
     // PRIVATE [SF], SHOW in unity inspector
     //---------------------------------------------
-
+    [SerializeField]
+    LayerMask platformLayerMask;
 
     // Start is called before the first frame update
     void Start()
@@ -40,8 +41,9 @@ public class BulletBehavior : MonoBehaviour
     {
         Destroy(gameObject);
     }
-/*    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
+        if((((1 << collision.gameObject.layer) & platformLayerMask) != 0))
         Destroy(gameObject);
-    }*/
+    }
 }
