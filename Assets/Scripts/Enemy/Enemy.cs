@@ -203,6 +203,7 @@ public class Enemy : MonoBehaviour
         if (collision.gameObject.CompareTag("Bullet") && collision.gameObject.GetComponent<BulletBehavior>().player)
         {
             Destroy(gameObject);
+            Destroy(collision.gameObject);
         }
     }
 

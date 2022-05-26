@@ -136,6 +136,7 @@ public class PlayerController : MonoBehaviour
         if (collision.gameObject.CompareTag("Bullet") && !collision.gameObject.GetComponent<BulletBehavior>().player)
         {
             health.GetComponent<Health>().dealDamage(5, collision.gameObject.tag);
+            Destroy(collision.gameObject);
         }
     }
 
