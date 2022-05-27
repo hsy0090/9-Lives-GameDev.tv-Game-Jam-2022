@@ -5,26 +5,49 @@ using UnityEngine;
 public class Rod : MonoBehaviour
 {
     [SerializeField]
+    ParticleSystem lightning;
+    [SerializeField]
     bool lit;
+    [SerializeField]
+    float lightninginterval = 13.0f;
 
+    [SerializeField]
     float littime = 5.0f;
     float timer;
 
+    bool playerinside = false;
+
     void Start()
     {
-        lit = false;
+        lightning.Play();
+        lit = true;
+        timer = littime;
     }
 
     void Update()
     {
-        
-        if(lit)
-        {
-            timer -= Time.deltaTime;
+        timer -= Time.deltaTime;
 
-            if(timer <= 0)
+        if (lit)
+        {
+            if(playerinside)
+            {
+                FindObjectOfType<Lives>().Death("Lightning");
+                playerinside = false;
+            }
+
+            if (timer <= 0)
             {
                 lit = false;
+                timer = lightninginterval;
+            }
+        }
+        else {
+            if (timer <= 0)
+            {
+                lightning.Play();
+                timer = littime;
+                lit = true;
             }
         }
     }
@@ -37,9 +60,17 @@ public class Rod : MonoBehaviour
             timer = littime;
         }
 
-        if(collision.gameObject.tag == "Player" && lit)
+        if(collision.gameObject.tag == "Player")
         {
-            FindObjectOfType<Lives>().Death("Lightning");
+            playerinside = true;
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == "Player")
+        {
+            playerinside = false;
         }
     }
 }

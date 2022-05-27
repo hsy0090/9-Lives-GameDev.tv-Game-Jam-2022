@@ -131,6 +131,9 @@ public class God : MonoBehaviour
     {
         foreach (TimeObj b in moveobjs) {
 
+            if (!b)
+                continue;
+
             b.rewinding = true; 
             if (b.reversepos.Count > 0)
             {

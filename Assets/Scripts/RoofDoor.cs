@@ -9,11 +9,15 @@ public class RoofDoor : MonoBehaviour
     GameObject player;
 
     [SerializeField]
-    GameObject Goto;
+    GameObject goTo;
+
+    [SerializeField]
+    GameObject triggerIcon;
 
     void Start()
     {
         playerinside = false;
+        triggerIcon.GetComponent<SpriteRenderer>().enabled = false;
     }
 
     void Update()
@@ -23,7 +27,7 @@ public class RoofDoor : MonoBehaviour
 
             if(Input.GetKeyDown(KeyCode.E))
             {
-                player.transform.position = Goto.transform.position;
+                player.transform.position = goTo.transform.position;
             }
         }
     }
@@ -31,6 +35,7 @@ public class RoofDoor : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if(collision.gameObject.tag == "Player") {
+            triggerIcon.GetComponent<SpriteRenderer>().enabled = true;
             player = collision.gameObject;
             playerinside = true;
         }
@@ -40,6 +45,7 @@ public class RoofDoor : MonoBehaviour
     {
         if (collision.gameObject.tag == "Player")
         {
+            triggerIcon.GetComponent<SpriteRenderer>().enabled = false;
             player = null;
             playerinside = false;
         }
