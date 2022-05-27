@@ -146,4 +146,11 @@ public class God : MonoBehaviour
             timeicon.SetActive(false);
         }
     }
+
+    public void ReverseTime()
+    {
+        timeicon.SetActive(true);
+        reversetime = true;
+        SetText("Ooh I don't think so");
+    }
 }
