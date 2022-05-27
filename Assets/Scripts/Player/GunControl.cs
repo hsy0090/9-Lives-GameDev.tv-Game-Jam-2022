@@ -35,6 +35,7 @@ public class GunControl : MonoBehaviour
     [SerializeField]
     GameObject Controller;
 
+
     [SerializeField]
     Vector3 trajectory;
     // Start is called before the first frame update
@@ -81,5 +82,20 @@ public class GunControl : MonoBehaviour
         {
             Fired = false;
         }
+    }
+
+    public void Reload()
+    {
+        for (int i = 0; i < 6; i++)
+        {
+            if (Controller.GetComponent<AmmoControl>().Magazine[i] == null)
+            {
+                Controller.GetComponent<AmmoControl>().MagazineSlot[i].GetComponent<Image>().enabled = true;
+                Controller.GetComponent<AmmoControl>().Magazine[i] = bulletPrefab;
+                Controller.GetComponent<AmmoControl>().currentSlot = 0;
+                Controller.transform.rotation = Quaternion.Euler(new Vector3(0, 0, 0));
+            }
+        }
+
     }
 }

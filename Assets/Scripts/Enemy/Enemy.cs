@@ -148,7 +148,7 @@ public class Enemy : MonoBehaviour
             dir.Normalize();
             bullet.GetComponent<BulletBehavior>().trajectory = dir;
             bullet.layer = LayerMask.NameToLayer("PlayerProjectiles");
-
+            bullet.GetComponent<BulletBehavior>().player = true;
             shoottimer = shootdelay;
         }
     }

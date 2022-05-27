@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Apple : MonoBehaviour
+public class Explosive : MonoBehaviour
 {
     //---------------------------------------------
     // PUBLIC [S.NS], NOT in unity inspector         
@@ -11,9 +11,10 @@ public class Apple : MonoBehaviour
     //---------------------------------------------
     // PRIVATE, NOT in unity inspector
     //---------------------------------------------
-    bool activated = false;
+    GameObject player;
     bool RunTimer = false;
-    int count = 0;
+    bool activated = false;
+    bool playerinside = false;
     //---------------------------------------------
     // PUBLIC, SHOW in unity inspector
     //---------------------------------------------
@@ -25,15 +26,11 @@ public class Apple : MonoBehaviour
     float Timer;
 
     [SerializeField]
-    float TimerInit = 5;
-
-    [SerializeField]
-    LayerMask platformLayerMask;
+    float TimerInit = 2;
     // Start is called before the first frame update
     void Start()
     {
         Timer = TimerInit;
-        this.gameObject.GetComponent<Rigidbody2D>().gravityScale = 0;
     }
 
     // Update is called once per frame
@@ -42,41 +39,58 @@ public class Apple : MonoBehaviour
         if (RunTimer && !activated)
         {
             Timer -= Time.deltaTime;
-            if(Timer <= 0)
+            if (Timer <= 0)
             {
-                this.gameObject.GetComponent<Rigidbody2D>().gravityScale = 1;
                 RunTimer = false;
                 activated = true;
             }
         }
-    }
-    public void StartTimer()
-    {
-        RunTimer = true;
-    }
-    public void ResetTimer()
-    {
-        Timer = TimerInit;
-        RunTimer = false;
+        if (activated)
+        {
+            if (playerinside)
+            {
+                FindObjectOfType<Lives>().Death("Explosive");
+                
+            }
+            Destroy(gameObject);
+        }
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Bullet"))
         {
             StartTimer();
+            Destroy(collision.gameObject);
         }
-        if (activated && collision.gameObject.CompareTag("Player"))
+    }
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("Player"))
         {
-            FindObjectOfType<Lives>().Death("Apple");
+            player = collision.gameObject;
+            playerinside = true;
         }
-        if (activated && (((1 << collision.gameObject.layer) & platformLayerMask) != 0))
+    }
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("Player"))
         {
-
-            if (count > 3)
+            playerinside = false;
+        }
+    }
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        if (activated)
+        {
+            if (collision.gameObject.CompareTag("Player") && gameObject != null)
             {
-                Destroy(gameObject);
+                FindObjectOfType<Lives>().Death("Explosive");
             }
-            count += 1;
         }
+
+    }
+    public void StartTimer()
+    {
+        RunTimer = true;
     }
 }

@@ -77,13 +77,13 @@ public class Health : MonoBehaviour
     }
     public void dealDamage(int damage, string damagetype)
     {
-        //if (!Life.GetComponent<Lives>().deathTag.Contains(damagetype))
-        //{
+        if (!Life.GetComponent<Lives>().deathTag.Contains(damagetype))
+        {
                 health -= damage;
                 if (health <= 0)
                 {
                     Life.GetComponent<Lives>().Death(damagetype);
                 }
-        //}
+        }
     }
 }
