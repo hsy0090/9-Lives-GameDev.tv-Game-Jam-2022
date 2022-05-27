@@ -39,6 +39,7 @@ public class oxygen : MonoBehaviour
     void Start()
     {
         Timer = Timerinit;
+        oxygenAmount = Oxygenslist.Count;
         while (numOfOxygens > Oxygenslist.Count)
         {
             Vector3 OxygenPos = new Vector3(OxygenBar.transform.position.x + (OxygenPrefab.GetComponent<Renderer>().bounds.size.x) * Oxygenslist.Count,
@@ -68,6 +69,7 @@ public class oxygen : MonoBehaviour
                 if(i * (Timerinit / numOfOxygens) >= Timer)
                 {
                     Oxygenslist[i].GetComponent<SpriteRenderer>().enabled = false;
+                    oxygenAmount--;
                 }
                 else
                 {
@@ -90,6 +92,7 @@ public class oxygen : MonoBehaviour
         {
             underwater = false;
             Timer = Timerinit;
+            oxygenAmount = Oxygenslist.Count;
         }
     }
 }
