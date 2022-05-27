@@ -38,6 +38,7 @@ public class Stalactite : MonoBehaviour
         {
             this.gameObject.GetComponent<Rigidbody2D>().gravityScale = 1;
             activated = true;
+            gameObject.layer = LayerMask.NameToLayer("Default");
         }
         if (activated && collision.gameObject.CompareTag("Player"))
         {

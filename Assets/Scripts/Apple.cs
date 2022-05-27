@@ -47,6 +47,7 @@ public class Apple : MonoBehaviour
                 this.gameObject.GetComponent<Rigidbody2D>().gravityScale = 1;
                 RunTimer = false;
                 activated = true;
+                gameObject.layer = LayerMask.NameToLayer("Default");
             }
         }
     }
@@ -72,7 +73,7 @@ public class Apple : MonoBehaviour
         if (activated && (((1 << collision.gameObject.layer) & platformLayerMask) != 0))
         {
 
-            if (count > 3)
+            if (count > 2)
             {
                 Destroy(gameObject);
             }
