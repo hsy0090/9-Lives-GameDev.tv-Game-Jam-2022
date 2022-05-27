@@ -41,7 +41,8 @@ public class Enemy : MonoBehaviour
     [SerializeField]
     [Range(0.0f, 1.0f)]
     float percentchance = 0.5f;
-    bool controlled = false;
+    [System.NonSerialized]
+    public bool controlled = false;
     [SerializeField]
     List<Enemy> allies;
 
@@ -124,7 +125,7 @@ public class Enemy : MonoBehaviour
 
         for (int i = 0; i < allies.Count; i++)
         {
-            if(allies[i] != null)
+            if(allies[i] != null && !allies[i].controlled)
             {
                 target = allies[i].gameObject.transform;
                 break;
