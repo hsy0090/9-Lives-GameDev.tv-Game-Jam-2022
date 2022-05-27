@@ -10,6 +10,8 @@ public class PlayerController : MonoBehaviour
 
     [System.NonSerialized]
     public bool onfire = false;
+    public bool canMove = true;
+
     [SerializeField]
     GameObject fire;
 
@@ -40,6 +42,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     GameObject life;
 
+    [SerializeField]
+    GameObject gun;
+
     Animator animator;
 
     void Start()
@@ -61,11 +66,11 @@ public class PlayerController : MonoBehaviour
             fire.SetActive(true);
         }
 
-        if ((Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow)) && Input.GetButtonDown("Jump") && !jumping)
+        if (canMove && (Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow)) && Input.GetButtonDown("Jump") && !jumping)
         {
             StartCoroutine("Jump");
         }
-        else if (Input.GetButton("Jump") && grounded && !jumping)
+        else if (canMove && Input.GetButton("Jump") && grounded && !jumping)
         {
             curjumpforce = jumpforce;
             rb2d.velocity = Vector2.up * curjumpforce;
@@ -87,9 +92,12 @@ public class PlayerController : MonoBehaviour
     {
 
         #region Input
-       
 
-        transform.Translate(Input.GetAxis("Horizontal") * Time.deltaTime * movespeed, 0, 0);
+        if (canMove)
+        {
+            transform.Translate(Input.GetAxis("Horizontal") * Time.deltaTime * movespeed, 0, 0);
+        }
+
         #endregion
 
 /*        animator.SetFloat("X Axis", Input.GetAxis("Horizontal"));
@@ -112,7 +120,15 @@ public class PlayerController : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Bullet") && !collision.gameObject.GetComponent<BulletBehavior>().player)
         {
-            health.GetComponent<Health>().dealDamage(5, collision.gameObject.tag);
+            if (collision.gameObject.GetComponent<BulletBehavior>().reflected)
+            {
+                health.GetComponent<Health>().dealDamage(5, "Reflected Bullet");
+            }
+            else
+            {
+                health.GetComponent<Health>().dealDamage(5, "Bullet");
+            }
+            
             Destroy(collision.gameObject);
         }
     }
@@ -157,5 +173,7 @@ public class PlayerController : MonoBehaviour
     public void Respawn()
     {
         transform.position = respawn.transform.position;
+        canMove = true;
+        gun.GetComponent<GunControl>().Reload();
     }
 }
