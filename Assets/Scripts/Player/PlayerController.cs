@@ -11,7 +11,10 @@ public class PlayerController : MonoBehaviour
     [System.NonSerialized]
     public bool onfire = false;
     public bool canMove = true;
+    float burnTimer = 0;
 
+    [SerializeField]
+    float burnTick = 1;
     [SerializeField]
     GameObject fire;
 
@@ -81,6 +84,19 @@ public class PlayerController : MonoBehaviour
             curjumpforce = 0.0f;
         }
 
+        if (onfire)
+        {
+            burnTimer += Time.deltaTime;
+            if(burnTimer >= burnTick)
+            {
+                health.GetComponent<Health>().dealDamage(1, "Fire");
+                burnTimer = 0;
+            }
+        }
+        else
+        {
+            burnTimer = 0;
+        }
         if (rb2d.velocity.y > 0)
             Physics2D.IgnoreLayerCollision(playerlayer, platformlayer, true);
 
