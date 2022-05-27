@@ -59,7 +59,7 @@ public class oxygen : MonoBehaviour
             {
                 FindObjectOfType<Lives>().Death("Drown");
             }
-            else
+            else if(!FindObjectOfType<Lives>().deathTag.Contains("Drown"))
             {
                 Timer -= Time.deltaTime;
             }
