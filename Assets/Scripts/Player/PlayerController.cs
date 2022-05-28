@@ -188,6 +188,7 @@ public class PlayerController : MonoBehaviour
                 health.GetComponent<Health>().dealDamage(1, "Bullet");
             }
             onfire = true;
+            fire.SetActive(true);
             Destroy(collision.gameObject);
         }
 
@@ -241,7 +242,11 @@ public class PlayerController : MonoBehaviour
         transform.position = respawn.transform.position;
         canMove = true;
         onfire = false;
+        fire.SetActive(false);
         gun.GetComponent<GunControl>().Reload();
         health.GetComponent<Health>().health = health.GetComponent<Health>().numOfHearts;
+        animator.SetBool("Sitting", false);
+        animator.SetBool("Falling", false);
+        animator.SetBool("Jumping", false);
     }
 }

@@ -8,6 +8,9 @@ public class Parallax : MonoBehaviour
     public Transform subj;
     Vector2 startpos;
     float startz;
+
+    [SerializeField]
+    float yoffset = 1.5f;
     
     Vector2 travel => (Vector2)cam.transform.position - startpos;
 
@@ -25,7 +28,7 @@ public class Parallax : MonoBehaviour
     void Update()
     {
         Vector2 pos = startpos + travel * parallaxfactor;
-        pos.y += 1.0f;
+        pos.y += yoffset;
         transform.position = new Vector3(pos.x, pos.y, startz);
     }
 }
