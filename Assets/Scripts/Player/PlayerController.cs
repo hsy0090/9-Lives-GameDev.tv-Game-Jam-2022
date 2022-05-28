@@ -227,6 +227,7 @@ public class PlayerController : MonoBehaviour
     {
         transform.position = respawn.transform.position;
         canMove = true;
+        onfire = false;
         gun.GetComponent<GunControl>().Reload();
     }
 }
