@@ -47,7 +47,15 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField]
     GameObject gun;
+    
+    [SerializeField]
+    Vector3 playerpos;
 
+    [SerializeField]
+    float idleTimer;
+
+    [SerializeField]
+    float idleDeathTime = 60;
     Animator animator;
 
     void Start()
@@ -57,6 +65,8 @@ public class PlayerController : MonoBehaviour
         curjumpforce = 0.0f;
         grounded = false;
         fire.SetActive(false);
+        playerpos = transform.position;
+        idleTimer = idleDeathTime;
     }
 
     void Update()
@@ -82,6 +92,20 @@ public class PlayerController : MonoBehaviour
         else
         {
             curjumpforce = 0.0f;
+        }
+
+        if (playerpos == transform.position && !life.GetComponent<Lives>().deathTag.Contains("Bored to Death"))
+        {
+            idleTimer -= Time.deltaTime;
+            if(idleTimer <= 0)
+            {
+                life.GetComponent<Lives>().Death("Bored to Death");
+            }
+        }
+        else
+        {
+            playerpos = transform.position;
+            idleTimer = idleDeathTime;
         }
 
         if (onfire)
