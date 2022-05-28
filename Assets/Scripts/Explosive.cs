@@ -11,10 +11,8 @@ public class Explosive : MonoBehaviour
     //---------------------------------------------
     // PRIVATE, NOT in unity inspector
     //---------------------------------------------
-    GameObject player;
     bool RunTimer = false;
     bool activated = false;
-    bool playerinside = false;
     //---------------------------------------------
     // PUBLIC, SHOW in unity inspector
     //---------------------------------------------
@@ -27,6 +25,11 @@ public class Explosive : MonoBehaviour
 
     [SerializeField]
     float TimerInit = 2;
+    [SerializeField]
+    float fieldOfImpact;
+    [SerializeField]
+    LayerMask LayerToHit;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -43,17 +46,10 @@ public class Explosive : MonoBehaviour
             {
                 RunTimer = false;
                 activated = true;
+                explode();
+                Destroy(gameObject);
             }
-        }
-        if (activated)
-        {
-            if (playerinside)
-            {
-                FindObjectOfType<Lives>().Death("Explosive");
-                
-            }
-            Destroy(gameObject);
-        }
+        }   
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {
@@ -64,34 +60,25 @@ public class Explosive : MonoBehaviour
             Destroy(collision.gameObject);
         }
     }
-    private void OnTriggerEnter2D(Collider2D collision)
+
+    public void StartTimer()
     {
-        if (collision.gameObject.CompareTag("Player"))
-        {
-            player = collision.gameObject;
-            playerinside = true;
-        }
+        RunTimer = true;
     }
-    private void OnTriggerExit2D(Collider2D collision)
+    void explode()
     {
-        if (collision.gameObject.CompareTag("Player"))
+        Collider2D[] objects = Physics2D.OverlapCircleAll(transform.position, fieldOfImpact, LayerToHit);
+        foreach(Collider2D obj in objects)
         {
-            playerinside = false;
-        }
-    }
-    private void OnTriggerStay2D(Collider2D collision)
-    {
-        if (activated)
-        {
-            if (collision.gameObject.CompareTag("Player") && gameObject != null)
+            if (obj.gameObject.CompareTag("Player") && gameObject != null)
             {
                 FindObjectOfType<Lives>().Death("Explosive");
             }
         }
-
     }
-    public void StartTimer()
+    private void OnDrawGizmosSelected()
     {
-        RunTimer = true;
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, fieldOfImpact);
     }
 }
