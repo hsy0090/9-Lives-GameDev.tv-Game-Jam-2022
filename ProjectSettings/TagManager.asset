@@ -9,6 +9,7 @@ TagManager:
   - Water
   - Bullet
   - Lightning
+  - Fire Bullet
   layers:
   - Default
   - TransparentFX

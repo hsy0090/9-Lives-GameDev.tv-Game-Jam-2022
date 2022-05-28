@@ -147,6 +147,19 @@ public class PlayerController : MonoBehaviour
             
             Destroy(collision.gameObject);
         }
+        if (collision.gameObject.CompareTag("Fire Bullet") && !collision.gameObject.GetComponent<BulletBehavior>().player)
+        {
+            if (collision.gameObject.GetComponent<BulletBehavior>().reflected)
+            {
+                health.GetComponent<Health>().dealDamage(1, "Reflected Bullet");
+            }
+            else
+            {
+                health.GetComponent<Health>().dealDamage(1, "Bullet");
+            }
+            onfire = true;
+            Destroy(collision.gameObject);
+        }
     }
 
     private void OnCollisionStay2D(Collision2D collision)
