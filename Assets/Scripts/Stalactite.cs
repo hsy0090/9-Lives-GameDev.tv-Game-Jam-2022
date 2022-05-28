@@ -12,6 +12,7 @@ public class Stalactite : MonoBehaviour
     // PRIVATE, NOT in unity inspector
     //---------------------------------------------
     bool activated = false;
+    bool isControlled = false;
     //---------------------------------------------
     // PUBLIC, SHOW in unity inspector
     //---------------------------------------------
@@ -32,13 +33,24 @@ public class Stalactite : MonoBehaviour
     {
         
     }
+
+    public void Controlled()
+    {
+        isControlled = true;
+    }
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Bullet"))
         {
-            this.gameObject.GetComponent<Rigidbody2D>().gravityScale = 1;
-            activated = true;
-            gameObject.layer = LayerMask.NameToLayer("Default");
+            if(isControlled){
+                Destroy(gameObject);
+            }
+            else
+            {
+                this.gameObject.GetComponent<Rigidbody2D>().gravityScale = 1;
+                activated = true;
+                gameObject.layer = LayerMask.NameToLayer("Default");
+            }
         }
         if (activated && collision.gameObject.CompareTag("Player"))
         {
