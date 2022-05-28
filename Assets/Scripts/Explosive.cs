@@ -29,11 +29,13 @@ public class Explosive : MonoBehaviour
     float fieldOfImpact;
     [SerializeField]
     LayerMask LayerToHit;
-
+    [SerializeField]
+    GameObject effect;
     // Start is called before the first frame update
     void Start()
     {
         Timer = TimerInit;
+        effect.SetActive(false);
     }
 
     // Update is called once per frame
@@ -46,10 +48,20 @@ public class Explosive : MonoBehaviour
             {
                 RunTimer = false;
                 activated = true;
+                
+                effect.SetActive(true);
+                
+                
+            }
+        }   
+        else if (activated)
+        {
+            if (effect.GetComponent<ParticleSystem>().time > effect.GetComponent<ParticleSystem>().main.duration /4)
+            {
                 explode();
                 Destroy(gameObject);
             }
-        }   
+        }
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {

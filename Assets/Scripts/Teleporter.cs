@@ -53,6 +53,7 @@ public class Teleporter : MonoBehaviour
             {
                 Debug.Log("teleport up");
                 player.transform.position = UpTeleporter.transform.position;
+                UpTeleporter.GetComponent<ParticleSystem>().Play();
             }
             if (DownTeleportIcon.GetComponent<SpriteRenderer>().enabled &&
                 (Input.GetKeyDown(KeyCode.DownArrow) || Input.GetKeyDown(KeyCode.S)) &&
@@ -60,6 +61,7 @@ public class Teleporter : MonoBehaviour
             {
                 Debug.Log("teleport down");
                 player.transform.position = DownTeleporter.transform.position;
+                DownTeleporter.GetComponent<ParticleSystem>().Play();
             }
         }
     }
