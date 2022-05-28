@@ -181,11 +181,11 @@ public class PlayerController : MonoBehaviour
         {
             if (collision.gameObject.GetComponent<BulletBehavior>().reflected)
             {
-                health.GetComponent<Health>().dealDamage(1, "Reflected Bullet");
+                health.GetComponent<Health>().dealDamage(0, "Reflected Bullet");
             }
             else
             {
-                health.GetComponent<Health>().dealDamage(1, "Bullet");
+                health.GetComponent<Health>().dealDamage(0, "Bullet");
             }
             onfire = true;
             fire.SetActive(true);
