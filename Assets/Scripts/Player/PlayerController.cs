@@ -229,5 +229,6 @@ public class PlayerController : MonoBehaviour
         canMove = true;
         onfire = false;
         gun.GetComponent<GunControl>().Reload();
+        health.GetComponent<Health>().health = health.GetComponent<Health>().numOfHearts;
     }
 }

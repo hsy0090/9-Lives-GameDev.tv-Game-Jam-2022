@@ -24,6 +24,7 @@ public class Lives : MonoBehaviour
     public GameObject LifePrefab;
     public GameObject Player;
     public GameObject health;
+    public GameObject DeathPanel;
     public List<string> deathTag = new List<string>();
     //---------------------------------------------
     // PRIVATE [SF], SHOW in unity inspector
@@ -31,6 +32,10 @@ public class Lives : MonoBehaviour
     [SerializeField]
     float LivesGap = 5;
 
+    
+
+    [SerializeField]
+    GameObject DeathText;
     // Start is called before the first frame update
     void Start()
     {
@@ -65,8 +70,9 @@ public class Lives : MonoBehaviour
         {
             deathTag.Add(deathtype);
             life -= 1;
-            Player.GetComponent<PlayerController>().Respawn();
-            health.GetComponent<Health>().health = health.GetComponent<Health>().numOfHearts;
+            DeathPanel.SetActive(true);
+            DeathText.GetComponent<TMPro.TextMeshProUGUI>().text = ("Death By: " + deathtype);
+            FindObjectOfType<GameManager>().Pause();
         }
     }
 }
