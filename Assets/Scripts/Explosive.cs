@@ -13,6 +13,7 @@ public class Explosive : MonoBehaviour
     //---------------------------------------------
     bool RunTimer = false;
     bool activated = false;
+    bool isControlled = false;
     //---------------------------------------------
     // PUBLIC, SHOW in unity inspector
     //---------------------------------------------
@@ -31,11 +32,12 @@ public class Explosive : MonoBehaviour
     LayerMask LayerToHit;
     [SerializeField]
     GameObject effect;
+    [SerializeField]
+    GameObject controledeffect;
     // Start is called before the first frame update
     void Start()
     {
         Timer = TimerInit;
-        effect.SetActive(false);
     }
 
     // Update is called once per frame
@@ -49,18 +51,21 @@ public class Explosive : MonoBehaviour
                 RunTimer = false;
                 activated = true;
                 
-                effect.SetActive(true);
-                
-                
             }
         }   
-        else if (activated)
+        else if (activated && !isControlled)
         {
+            effect.GetComponent<ParticleSystem>().Play();
             if (effect.GetComponent<ParticleSystem>().time > effect.GetComponent<ParticleSystem>().main.duration /4)
             {
                 explode();
                 Destroy(gameObject);
             }
+        }
+        else if(activated && isControlled)
+        {
+            controledeffect.GetComponent<ParticleSystem>().Play();
+            Destroy(gameObject, 1);
         }
     }
     private void OnCollisionEnter2D(Collision2D collision)
@@ -77,6 +82,12 @@ public class Explosive : MonoBehaviour
     {
         RunTimer = true;
     }
+
+    public void Controlled()
+    {
+        isControlled = true;
+    }
+
     void explode()
     {
         Collider2D[] objects = Physics2D.OverlapCircleAll(transform.position, fieldOfImpact, LayerToHit);

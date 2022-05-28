@@ -13,7 +13,7 @@ public class Door : MonoBehaviour
     //---------------------------------------------
     bool playerinside = false;
     bool Triggered = false;
-    GameObject player;
+    bool isControlled = false;
     //---------------------------------------------
     // PUBLIC, SHOW in unity inspector
     //---------------------------------------------
@@ -51,13 +51,17 @@ public class Door : MonoBehaviour
             }
         }
     }
+    public void Controlled()
+    {
+        isControlled = true;
+    }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("Player"))
         {
             TriggerIcon.GetComponent<SpriteRenderer>().enabled = true;
             playerinside = true;
-            player = collision.gameObject;
         }
     }
     private void OnTriggerExit2D(Collider2D collision)
@@ -73,19 +77,27 @@ public class Door : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Bullet"))
         {
-            collision.gameObject.GetComponent<BulletBehavior>().trajectory *= -1;
-            collision.gameObject.GetComponent<BulletBehavior>().reflected =  true;
-            if (collision.gameObject.layer == LayerMask.NameToLayer("PlayerProjectiles"))
+            if (!isControlled)
             {
-                collision.gameObject.layer = LayerMask.NameToLayer("EnemyProjectiles");
-                collision.gameObject.GetComponent<BulletBehavior>().player = false;
-            }
-            else if (collision.gameObject.layer == LayerMask.NameToLayer("EnemyProjectiles"))
-            {
-                collision.gameObject.layer = LayerMask.NameToLayer("PlayerProjectiles");
-                collision.gameObject.GetComponent<BulletBehavior>().player = true;
-            }
+                collision.gameObject.GetComponent<BulletBehavior>().trajectory *= -1;
+                collision.gameObject.GetComponent<BulletBehavior>().reflected = true;
+                if (collision.gameObject.layer == LayerMask.NameToLayer("PlayerProjectiles"))
+                {
+                    collision.gameObject.layer = LayerMask.NameToLayer("EnemyProjectiles");
+                    collision.gameObject.GetComponent<BulletBehavior>().player = false;
+                }
+                else if (collision.gameObject.layer == LayerMask.NameToLayer("EnemyProjectiles"))
+                {
+                    collision.gameObject.layer = LayerMask.NameToLayer("PlayerProjectiles");
+                    collision.gameObject.GetComponent<BulletBehavior>().player = true;
+                }
 
+            }
+            else
+            {
+                Destroy(collision.gameObject);
+            }
         }
+
     }
 }
