@@ -88,6 +88,7 @@ public class PlayerController : MonoBehaviour
             curjumpforce = jumpforce;
             rb2d.velocity = Vector2.up * curjumpforce;
             StartCoroutine("Jump");
+            animator.SetBool("Jumping", true);
         }
         else
         {
@@ -136,11 +137,16 @@ public class PlayerController : MonoBehaviour
         if (canMove)
         {
             transform.Translate(Input.GetAxis("Horizontal") * Time.deltaTime * movespeed, 0, 0);
+            animator.SetBool("Sitting", false);
+        }
+        else
+        {
+            animator.SetBool("Sitting", true);
         }
 
         #endregion
 
-/*        animator.SetFloat("X Axis", Input.GetAxis("Horizontal"));
+        animator.SetFloat("X Axis", Input.GetAxis("Horizontal"));
         animator.SetFloat("JumpForce", curjumpforce);
         animator.SetFloat("Speed", Mathf.Abs(Input.GetAxis("Horizontal")) * 10);
 
@@ -153,7 +159,7 @@ public class PlayerController : MonoBehaviour
         {
             animator.SetBool("LastFacingRight", false);
             animator.SetBool("LastFacingLeft", true);
-        }*/
+        }
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -184,6 +190,10 @@ public class PlayerController : MonoBehaviour
             onfire = true;
             Destroy(collision.gameObject);
         }
+
+        grounded = collision != null && (((1 << collision.gameObject.layer) & platformLayerMask) != 0);
+        if (grounded)
+            animator.SetBool("Falling", false);
     }
 
     private void OnCollisionStay2D(Collision2D collision)
@@ -194,6 +204,7 @@ public class PlayerController : MonoBehaviour
     private void OnCollisionExit2D(Collision2D collision)
     {
         grounded = false;
+        animator.SetBool("Falling", true);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -221,6 +232,8 @@ public class PlayerController : MonoBehaviour
         yield return new WaitForSeconds(1.0f);
         Physics2D.IgnoreLayerCollision(playerlayer, platformlayer, false);
         jumping = false;
+        animator.SetBool("Jumping", false);
+        animator.SetBool("Falling", true);
     }
 
     public void Respawn()

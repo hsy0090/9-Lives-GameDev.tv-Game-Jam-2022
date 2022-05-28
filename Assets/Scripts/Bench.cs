@@ -74,14 +74,16 @@ public class Bench : MonoBehaviour
     void TriggerOn()
     {
         Triggered = true;
-        affectedObject.GetComponent<Apple>().StartTimer();
+        if(affectedObject != null)
+            affectedObject.GetComponent<Apple>().StartTimer();
         player.GetComponent<PlayerController>().canMove = false;
     }
 
     void TriggerOff()
     {
         Triggered = false;
-        affectedObject.GetComponent<Apple>().ResetTimer();
+        if (affectedObject != null)
+            affectedObject.GetComponent<Apple>().ResetTimer();
         player.GetComponent<PlayerController>().canMove = true;
     }
 }

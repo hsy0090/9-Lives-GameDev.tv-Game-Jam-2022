@@ -41,13 +41,10 @@ public class BulletBehavior : MonoBehaviour
     {
         transform.position += trajectory * BulletSpeed * Time.deltaTime;
     }
-/*    void OnBecameInvisible()
+
+    private void OnCollisionEnter2D(Collision2D collision)
     {
-        Destroy(gameObject);
-    }*/
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if((((1 << collision.gameObject.layer) & platformLayerMask) != 0))
-        Destroy(gameObject);
+        if ((((1 << collision.gameObject.layer) & platformLayerMask) != 0))
+            Destroy(gameObject);
     }
 }

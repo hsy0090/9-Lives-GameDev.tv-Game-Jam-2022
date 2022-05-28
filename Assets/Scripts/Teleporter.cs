@@ -48,14 +48,14 @@ public class Teleporter : MonoBehaviour
         if(playerinside && TeleportActivated)
         {
             if (UpTeleportIcon.GetComponent<SpriteRenderer>().enabled &&
-                    Input.GetKeyDown(KeyCode.UpArrow) &&
+                    (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W)) &&
                     UpTeleporter.GetComponent<Teleporter>().GetStatus())
             {
                 Debug.Log("teleport up");
                 player.transform.position = UpTeleporter.transform.position;
             }
             if (DownTeleportIcon.GetComponent<SpriteRenderer>().enabled &&
-                Input.GetKeyDown(KeyCode.DownArrow) &&
+                (Input.GetKeyDown(KeyCode.DownArrow) || Input.GetKeyDown(KeyCode.S)) &&
                 DownTeleporter.GetComponent<Teleporter>().GetStatus())
             {
                 Debug.Log("teleport down");
