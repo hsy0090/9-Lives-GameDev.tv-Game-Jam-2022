@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class GunControl : MonoBehaviour
@@ -47,7 +48,7 @@ public class GunControl : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (FindObjectOfType<GameManager>().isPause())
+        if (FindObjectOfType<GameManager>().isPause() && !EventSystem.current.IsPointerOverGameObject())
         {
             Vector3 mousePos = Input.mousePosition;
             //       mousePos.z = 5.23f;
