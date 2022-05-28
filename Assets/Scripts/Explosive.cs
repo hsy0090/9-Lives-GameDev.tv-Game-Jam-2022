@@ -55,7 +55,10 @@ public class Explosive : MonoBehaviour
         }   
         else if (activated && !isControlled)
         {
-            effect.GetComponent<ParticleSystem>().Play();
+            if(!effect.GetComponent<ParticleSystem>().isPlaying)
+            {
+                effect.GetComponent<ParticleSystem>().Play();
+            }
             if (effect.GetComponent<ParticleSystem>().time > effect.GetComponent<ParticleSystem>().main.duration /4)
             {
                 explode();
@@ -74,6 +77,10 @@ public class Explosive : MonoBehaviour
             (collision.gameObject.CompareTag("Player") && collision.gameObject.GetComponent<PlayerController>().onfire))
         {
             StartTimer();
+            
+        }
+        if(collision.gameObject.CompareTag("Bullet"))
+        {
             Destroy(collision.gameObject);
         }
     }
