@@ -36,16 +36,17 @@ public class GunControl : MonoBehaviour
     [SerializeField]
     GameObject Controller;
 
-
     [SerializeField]
     Vector3 trajectory;
-    // Start is called before the first frame update
+
+    [SerializeField]
+    Animator barrel;
+
     void Start()
     {
         Reload();
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (FindObjectOfType<GameManager>().isPause() && !EventSystem.current.IsPointerOverGameObject())
@@ -68,6 +69,8 @@ public class GunControl : MonoBehaviour
                     bullet = Instantiate(Controller.GetComponent<AmmoControl>().Magazine[Controller.GetComponent<AmmoControl>().currentSlot]
                         , bulletSpawn.transform.position, bulletSpawn.GetComponentInParent<Transform>().rotation);
 
+                    barrel.Play("Shoot");
+
                     Controller.GetComponent<AmmoControl>().Magazine[Controller.GetComponent<AmmoControl>().currentSlot] = null;
                     Controller.GetComponent<AmmoControl>().MagazineSlot[Controller.GetComponent<AmmoControl>()
                         .currentSlot].GetComponent<Image>().enabled = false;
@@ -84,6 +87,7 @@ public class GunControl : MonoBehaviour
             else if (Input.GetMouseButtonUp(0) && Fired)
             {
                 Fired = false;
+                barrel.StopPlayback();
             }
         }
     }

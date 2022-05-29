@@ -19,23 +19,20 @@ public class Destructable : MonoBehaviour
     //---------------------------------------------
     // PRIVATE [SF], SHOW in unity inspector
     //---------------------------------------------
-    // Start is called before the first frame update
-    void Start()
-    {
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
+    [SerializeField]
+    Sprite destroyedsprite;
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Bullet"))
         {
-            Destroy(gameObject);
+            if(!destroyedsprite)
+                Destroy(gameObject);
+            else
+            {
+                GetComponent<BoxCollider2D>().isTrigger = true;
+                GetComponent<SpriteRenderer>().sprite = destroyedsprite;
+            }
         }
     }
 }

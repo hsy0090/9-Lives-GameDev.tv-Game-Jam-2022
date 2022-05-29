@@ -12,7 +12,6 @@ public class Stalactite : MonoBehaviour
     // PRIVATE, NOT in unity inspector
     //---------------------------------------------
     bool activated = false;
-    bool isControlled = false;
     //---------------------------------------------
     // PUBLIC, SHOW in unity inspector
     //---------------------------------------------
@@ -22,16 +21,18 @@ public class Stalactite : MonoBehaviour
     //---------------------------------------------
     [SerializeField]
     LayerMask platformLayerMask;
-    // Start is called before the first frame update
+
+    [Header("God Control")]
+    [SerializeField]
+    string[] comments;
+    [SerializeField]
+    [Range(0.0f, 1.0f)]
+    float percentchance = 0.5f;
+    bool isControlled = false;
+
     void Start()
     {
         this.gameObject.GetComponent<Rigidbody2D>().gravityScale = 0;
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 
     public void Controlled()
@@ -42,8 +43,14 @@ public class Stalactite : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Bullet"))
         {
-            if(isControlled){
+            if (Random.value <= percentchance) { 
+                isControlled = true;
                 Destroy(gameObject);
+
+                if(God.Instance)
+                {
+                    God.Instance.SetText(comments[Random.Range(0, comments.Length)]);
+                }
             }
             else
             {

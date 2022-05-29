@@ -68,14 +68,6 @@ public class God : MonoBehaviour
             timeicon.SetActive(true);
             reversetime = true;
         }
-
-        timer -= Time.deltaTime;
-
-        if(timer <= 0.0f && !displaying)
-        {
-            SetText(randomlines[Random.Range(0, randomlines.Length)]);
-            displaying = true;
-        }
     }
 
     private void FixedUpdate()
@@ -90,6 +82,10 @@ public class God : MonoBehaviour
 
     public void SetText(string _text)
     {
+        if (displaying)
+            return;
+
+        displaying = true;
         curline = _text;
         StartCoroutine(DisplayText());
     }
@@ -155,5 +151,15 @@ public class God : MonoBehaviour
         timeicon.SetActive(true);
         reversetime = true;
         SetText("Ooh I don't think so");
+    }
+
+    public void RandomLines()
+    {
+        timer -= Time.deltaTime;
+
+        if (timer <= 0.0f && !displaying)
+        {
+            SetText(randomlines[Random.Range(0, randomlines.Length)]);
+        }
     }
 }
