@@ -34,6 +34,8 @@ public class Explosive : MonoBehaviour
     GameObject effect;
     [SerializeField]
     GameObject controledeffect;
+    [SerializeField]
+    GameObject Flash;
     // Start is called before the first frame update
     void Start()
     {
@@ -52,6 +54,7 @@ public class Explosive : MonoBehaviour
                 activated = true;
                 
             }
+            Flash.GetComponent<SpriteRenderer>().enabled = !Flash.GetComponent<SpriteRenderer>().enabled;
         }   
         else if (activated && !isControlled)
         {
@@ -64,9 +67,11 @@ public class Explosive : MonoBehaviour
                 explode();
                 Destroy(gameObject);
             }
+            
         }
         else if(activated && isControlled)
         {
+            
             controledeffect.GetComponent<ParticleSystem>().Play();
             Destroy(gameObject, 1);
         }
