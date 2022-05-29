@@ -13,7 +13,6 @@ public class Door : MonoBehaviour
     //---------------------------------------------
     bool playerinside = false;
     bool Triggered = false;
-    bool isControlled = false;
     //---------------------------------------------
     // PUBLIC, SHOW in unity inspector
     //---------------------------------------------
@@ -24,13 +23,26 @@ public class Door : MonoBehaviour
     [SerializeField]
     GameObject TriggerIcon;
 
-    // Start is called before the first frame update
+    [SerializeField]
+    Sprite closed;
+
+    [SerializeField]
+    Sprite open;
+
+    [Header("God Control")]
+    [SerializeField]
+    [Range(0.0f, 1.0f)]
+    float percentchance = 0.5f;
+    [SerializeField]
+    string[] comments;
+    [SerializeField]
+    bool isControlled = false;
+
     void Start()
     {
-        
+        GetComponent<SpriteRenderer>().sprite = closed;
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (playerinside)
@@ -42,11 +54,13 @@ public class Door : MonoBehaviour
                 {
                     Triggered = false;
                     gameObject.GetComponent<BoxCollider2D>().enabled = true;
+                    GetComponent<SpriteRenderer>().sprite = closed;
                 }
                 else
                 {
                     Triggered = true;
                     gameObject.GetComponent<BoxCollider2D>().enabled = false;
+                    GetComponent<SpriteRenderer>().sprite = open;
                 }
             }
         }
@@ -77,7 +91,18 @@ public class Door : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Bullet"))
         {
-            if (!isControlled)
+            if (!isControlled && Random.value <= percentchance)
+            {
+                isControlled = true;
+                GetComponent<SpriteRenderer>().color = Color.red;
+
+                if (God.Instance)
+                {
+                    God.Instance.SetText(comments[Random.Range(0, comments.Length)]);
+                }
+            }
+
+                if (!isControlled)
             {
                 collision.gameObject.GetComponent<BulletBehavior>().trajectory *= -1;
                 collision.gameObject.GetComponent<BulletBehavior>().reflected = true;

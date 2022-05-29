@@ -24,6 +24,18 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     GameObject fire;
 
+    [SerializeField]
+    GameObject health;
+
+    [SerializeField]
+    GameObject life;
+
+    [SerializeField]
+    float idleTimer;
+
+    [SerializeField]
+    float idleDeathTime = 60;
+
     [Header("Movement")]
     [SerializeField]
     float movespeed = 2.5f;
@@ -45,23 +57,13 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     bool jumping = false;
 
-    [SerializeField]
-    GameObject health;
-
-    [SerializeField]
-    GameObject life;
-
+    [Header("Gun Control")]
     [SerializeField]
     GameObject gun;
     
     [SerializeField]
     Vector3 playerpos;
 
-    [SerializeField]
-    float idleTimer;
-
-    [SerializeField]
-    float idleDeathTime = 60;
     Animator animator;
 
 
@@ -78,9 +80,11 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        
+        if(grounded)
+            animator.SetBool("Falling", false);
+
         //test fire
-        if(Input.GetKeyDown(KeyCode.J))
+        if (Input.GetKeyDown(KeyCode.J))
         {
             onfire = true;
             fire.SetActive(true);
@@ -105,6 +109,12 @@ public class PlayerController : MonoBehaviour
         if (playerpos == transform.position && !life.GetComponent<Lives>().deathTag.Contains("Bored to Death"))
         {
             idleTimer -= Time.deltaTime;
+
+            if(God.Instance)
+            {
+                God.Instance.RandomLines();
+            }
+
             if(idleTimer <= 0)
             {
                 life.GetComponent<Lives>().Death("Bored to Death");

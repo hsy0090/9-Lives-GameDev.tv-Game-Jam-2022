@@ -206,6 +206,12 @@ public class Enemy : MonoBehaviour
                 controlled = true;
                 state = States.CONTROLLED;
                 target = null;
+
+                if (God.Instance)
+                {
+                    God.Instance.SetText("Its under my control now");
+                }
+
                 return;
             }
         }

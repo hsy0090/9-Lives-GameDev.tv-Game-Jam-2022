@@ -13,7 +13,6 @@ public class Explosive : MonoBehaviour
     //---------------------------------------------
     bool RunTimer = false;
     bool activated = false;
-    bool isControlled = false;
     //---------------------------------------------
     // PUBLIC, SHOW in unity inspector
     //---------------------------------------------
@@ -36,6 +35,15 @@ public class Explosive : MonoBehaviour
     GameObject controledeffect;
     [SerializeField]
     GameObject Flash;
+
+    [Header("God Control")]
+    [SerializeField]
+    string[] comments;
+    [SerializeField]
+    [Range(0.0f, 1.0f)]
+    float percentchance = 0.5f;
+    bool isControlled = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -71,7 +79,11 @@ public class Explosive : MonoBehaviour
         }
         else if(activated && isControlled)
         {
-            
+            if(God.Instance)
+            {
+                God.Instance.SetText(comments[Random.Range(0, comments.Length)]);
+            }
+
             controledeffect.GetComponent<ParticleSystem>().Play();
             Destroy(gameObject, 1);
         }
@@ -82,7 +94,16 @@ public class Explosive : MonoBehaviour
             (collision.gameObject.CompareTag("Player") && collision.gameObject.GetComponent<PlayerController>().onfire))
         {
             StartTimer();
-            
+
+            if (God.Instance)
+            {
+                God.Instance.SetText("Ooh No");
+
+                if (Random.value <= percentchance)
+                {
+                    isControlled = true;
+                }
+            }
         }
         if(collision.gameObject.CompareTag("Bullet"))
         {
