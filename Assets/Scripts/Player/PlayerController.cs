@@ -13,6 +13,12 @@ public class PlayerController : MonoBehaviour
     public bool canMove = true;
     float burnTimer = 0;
 
+    public GameObject Teleport1;
+
+    public GameObject Teleport2;
+
+    public GameObject Teleport3;
+
     [SerializeField]
     float burnTick = 1;
     [SerializeField]
@@ -68,6 +74,7 @@ public class PlayerController : MonoBehaviour
     Vector3 playerpos;
 
     Animator animator;
+
 
     void Start()
     {

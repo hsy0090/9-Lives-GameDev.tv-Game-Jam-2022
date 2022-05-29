@@ -40,6 +40,19 @@ public class Lives : MonoBehaviour
     {
         life = PlayerSave.Instance.life;
         deathTag = PlayerSave.Instance.deathTag;
+        if (PlayerSave.Instance.Teleport1)
+        {
+            Player.GetComponent<PlayerController>().Teleport1.GetComponent<Teleporter>().ActivatePortal();
+        }
+        if (PlayerSave.Instance.Teleport2)
+        {
+            Player.GetComponent<PlayerController>().Teleport2.GetComponent<Teleporter>().ActivatePortal();
+        }
+        if (PlayerSave.Instance.Teleport3)
+        {
+            Player.GetComponent<PlayerController>().Teleport3.GetComponent<Teleporter>().ActivatePortal();
+        }
+
     }
 
     // Update is called once per frame
@@ -80,5 +93,8 @@ public class Lives : MonoBehaviour
     {
         PlayerSave.Instance.life = life;
         PlayerSave.Instance.deathTag = deathTag;
+        PlayerSave.Instance.Teleport1 = Player.GetComponent<PlayerController>().Teleport1.GetComponent<Teleporter>().GetStatus();
+        PlayerSave.Instance.Teleport2 = Player.GetComponent<PlayerController>().Teleport2.GetComponent<Teleporter>().GetStatus();
+        PlayerSave.Instance.Teleport3 = Player.GetComponent<PlayerController>().Teleport3.GetComponent<Teleporter>().GetStatus();
     }
 }

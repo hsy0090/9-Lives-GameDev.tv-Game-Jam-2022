@@ -100,9 +100,13 @@ public class Teleporter : MonoBehaviour
     {
 
     }
-    bool GetStatus()
+    public bool GetStatus()
     {
         return TeleportActivated;
+    }
+    public void ActivatePortal()
+    {
+        TeleportActivated = true;
     }
 
 }

@@ -9774,6 +9774,9 @@ MonoBehaviour:
   life: 0
   numOfLives: 9
   deathTag: []
+  Teleport1: 0
+  Teleport2: 0
+  Teleport3: 0
 --- !u!4 &823391588
 Transform:
   m_ObjectHideFlags: 0
@@ -10169,6 +10172,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   respawn: {fileID: 933618675}
   canMove: 1
+  Teleport1: {fileID: 2134714315}
+  Teleport2: {fileID: 925635654}
+  Teleport3: {fileID: 840436284}
   burnTick: 1
   fire: {fileID: 1919489679}
   movespeed: 5

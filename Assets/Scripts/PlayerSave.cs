@@ -18,6 +18,9 @@ public class PlayerSave : MonoBehaviour
     public int life;
     public int numOfLives = 9;
     public List<string> deathTag = new List<string>();
+    public bool Teleport1;
+    public bool Teleport2;
+    public bool Teleport3;
     //---------------------------------------------
     // PRIVATE [SF], SHOW in unity inspector
     //---------------------------------------------
@@ -52,5 +55,8 @@ public class PlayerSave : MonoBehaviour
     {
         life = numOfLives;
         deathTag.Clear();
+        Teleport1 = false;
+        Teleport2 = false;
+        Teleport3 = false;
     }
 }
