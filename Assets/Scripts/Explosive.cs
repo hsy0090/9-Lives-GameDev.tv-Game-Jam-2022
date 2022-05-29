@@ -44,13 +44,11 @@ public class Explosive : MonoBehaviour
     float percentchance = 0.5f;
     bool isControlled = false;
 
-    // Start is called before the first frame update
     void Start()
     {
         Timer = TimerInit;
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (RunTimer && !activated)

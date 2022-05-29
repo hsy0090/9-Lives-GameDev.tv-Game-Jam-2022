@@ -30,6 +30,15 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     float idleDeathTime = 60;
 
+    [Header("God Heal")]
+    [SerializeField]
+    string[] comments;
+    [SerializeField]
+    [Range(0.0f, 1.0f)]
+    float percentchance = 0.5f;
+    [SerializeField]
+    GameObject heal;
+
     [Header("Movement")]
     [SerializeField]
     float movespeed = 2.5f;
@@ -54,7 +63,7 @@ public class PlayerController : MonoBehaviour
     [Header("Gun Control")]
     [SerializeField]
     GameObject gun;
-    
+
     [SerializeField]
     Vector3 playerpos;
 
@@ -69,11 +78,12 @@ public class PlayerController : MonoBehaviour
         fire.SetActive(false);
         playerpos = transform.position;
         idleTimer = idleDeathTime;
+        heal.SetActive(false);
     }
 
     void Update()
     {
-        if(grounded)
+        if (grounded)
             animator.SetBool("Falling", false);
 
         //test fire
@@ -81,6 +91,11 @@ public class PlayerController : MonoBehaviour
         {
             onfire = true;
             fire.SetActive(true);
+        }
+
+        if (Input.GetKeyDown(KeyCode.L))
+        {
+            Heal();
         }
 
         if (canMove && (Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow)) && Input.GetButtonDown("Jump") && !jumping)
@@ -103,12 +118,12 @@ public class PlayerController : MonoBehaviour
         {
             idleTimer -= Time.deltaTime;
 
-            if(God.Instance)
+            if (God.Instance)
             {
                 God.Instance.RandomLines();
             }
 
-            if(idleTimer <= 0)
+            if (idleTimer <= 0)
             {
                 life.GetComponent<Lives>().Death("Bored to Death");
             }
@@ -117,15 +132,25 @@ public class PlayerController : MonoBehaviour
         {
             playerpos = transform.position;
             idleTimer = idleDeathTime;
+
+            if (God.Instance)
+            {
+                God.Instance.ResetRandLines();
+            }
         }
 
         if (onfire)
         {
             burnTimer += Time.deltaTime;
-            if(burnTimer >= burnTick)
+            if (burnTimer >= burnTick)
             {
                 health.GetComponent<Health>().dealDamage(1, "Fire");
                 burnTimer = 0;
+
+                if (health.GetComponent<Health>().health == 1 && Random.value <= percentchance)
+                {
+                    Heal();
+                }
             }
         }
         else
@@ -184,7 +209,7 @@ public class PlayerController : MonoBehaviour
             {
                 health.GetComponent<Health>().dealDamage(5, "Bullet");
             }
-            
+
             Destroy(collision.gameObject);
         }
         if (collision.gameObject.CompareTag("Fire Bullet") && !collision.gameObject.GetComponent<BulletBehavior>().player)
@@ -224,16 +249,16 @@ public class PlayerController : MonoBehaviour
         {
             transform.position = respawn.transform.position;
 
-            if(God.Instance)
+            if (God.Instance)
                 God.Instance.SetText("Ooh I don't think so");
         }
 
-        if(collision.gameObject.tag == "Water")
+        if (collision.gameObject.tag == "Water")
         {
             onfire = false;
             fire.SetActive(false);
         }
-        
+
     }
 
     IEnumerator Jump()
@@ -258,5 +283,21 @@ public class PlayerController : MonoBehaviour
         animator.SetBool("Sitting", false);
         animator.SetBool("Falling", false);
         animator.SetBool("Jumping", false);
+    }
+
+    void Heal()
+    {
+        God.Instance.SetText(comments[Random.Range(0, comments.Length)]);
+        StartCoroutine(Healing());
+        health.GetComponent<Health>().dealDamage(-5, "Heal");
+        onfire = false;
+        fire.SetActive(false);
+    }
+
+    IEnumerator Healing()
+    {
+        heal.SetActive(true);
+        yield return new WaitForSeconds(1.0f);
+        heal.SetActive(false);
     }
 }

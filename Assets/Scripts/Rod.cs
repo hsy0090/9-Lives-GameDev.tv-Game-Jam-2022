@@ -17,6 +17,15 @@ public class Rod : MonoBehaviour
 
     bool playerinside = false;
 
+    [Header("God Control")]
+    [SerializeField]
+    ParticleSystem fakelightning;
+    [SerializeField]
+    string[] comments;
+    [SerializeField]
+    [Range(0.0f, 1.0f)]
+    float percentchance = 0.5f;
+
     void Start()
     {
         lightning.Play();
@@ -43,11 +52,27 @@ public class Rod : MonoBehaviour
             }
         }
         else {
+
             if (timer <= 0)
             {
-                lightning.Play();
-                timer = littime;
-                lit = true;
+
+                if (playerinside && Random.value <= percentchance)
+                {
+                    fakelightning.Play();
+                    timer = littime;
+                    lit = false;
+
+                    if (God.Instance)
+                    {
+                        God.Instance.SetText(comments[Random.Range(0, comments.Length)]);
+                    }
+                }
+                else
+                {
+                    lightning.Play();
+                    timer = littime;
+                    lit = true;
+                }
             }
         }
     }

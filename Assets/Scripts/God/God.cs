@@ -160,6 +160,12 @@ public class God : MonoBehaviour
         if (timer <= 0.0f && !displaying)
         {
             SetText(randomlines[Random.Range(0, randomlines.Length)]);
+            ResetRandLines();
         }
+    }
+
+    public void ResetRandLines()
+    {
+        timer = randomtxttime;
     }
 }
