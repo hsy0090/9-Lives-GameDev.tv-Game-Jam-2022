@@ -34,10 +34,22 @@ public class oxygen : MonoBehaviour
 
     [SerializeField]
     float Timerinit = 5;
-    // Start is called before the first frame update
+
+    [Header("God Control")]
+    [SerializeField]
+    GameObject bubble;
+    bool bubbleactive = false;
+    [SerializeField]
+    string[] comments;
+    [SerializeField]
+    [Range(0.0f, 1.0f)]
+    float percentchance = 0.5f;
+
     void Start()
     {
         Timer = Timerinit;
+        bubble.SetActive(false);
+        bubbleactive = false;
         
         while (numOfOxygens > Oxygenslist.Count)
         {
@@ -50,13 +62,17 @@ public class oxygen : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
     void Update()
     {
-        if (underwater)
+        if (underwater && !bubbleactive)
         {
             if (Timer <= 0)
             {
+                if (God.Instance && !FindObjectOfType<Lives>().deathTag.Contains("Drown"))
+                {
+                    God.Instance.SetText("Trying to be a fish?", true);
+                }
+
                 FindObjectOfType<Lives>().Death("Drown");
             }
             else if(!FindObjectOfType<Lives>().deathTag.Contains("Drown"))
@@ -65,7 +81,7 @@ public class oxygen : MonoBehaviour
             }
             for(int i = 0; i < Oxygenslist.Count; i++)
             {
-                if(i * (Timerinit / numOfOxygens) >= Timer)
+                if (i * (Timerinit / numOfOxygens) >= Timer)
                 {
                     Oxygenslist[i].GetComponent<SpriteRenderer>().enabled = false;
                 }
@@ -89,6 +105,17 @@ public class oxygen : MonoBehaviour
         if (collision.gameObject.CompareTag("Water"))
         {
             underwater = true;
+
+            if (!bubbleactive && Random.value <= percentchance)
+            {
+                bubbleactive = true;
+                bubble.SetActive(true);
+
+                if (God.Instance)
+                {
+                    God.Instance.SetText(comments[Random.Range(0, comments.Length)]);
+                }
+            }
         }
     }
     private void OnTriggerExit2D(Collider2D collision)
@@ -97,7 +124,8 @@ public class oxygen : MonoBehaviour
         {
             underwater = false;
             Timer = Timerinit;
-            
+            bubbleactive = false;
+            bubble.SetActive(false);
         }
     }
 }

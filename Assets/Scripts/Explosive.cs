@@ -95,7 +95,7 @@ public class Explosive : MonoBehaviour
 
             if (God.Instance)
             {
-                God.Instance.SetText("Ooh No");
+                God.Instance.SetText("Ooh No", true);
 
                 if (Random.value <= percentchance)
                 {
@@ -126,6 +126,11 @@ public class Explosive : MonoBehaviour
         {
             if (obj.gameObject.CompareTag("Player") && gameObject != null)
             {
+                if (God.Instance && !FindObjectOfType<Lives>().deathTag.Contains("Explosive"))
+                {
+                    God.Instance.SetText("Trying to go out with a bang?", true);
+                }
+
                 FindObjectOfType<Lives>().Death("Explosive");
             }
         }

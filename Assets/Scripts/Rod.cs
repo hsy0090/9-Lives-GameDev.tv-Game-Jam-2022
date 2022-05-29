@@ -15,6 +15,7 @@ public class Rod : MonoBehaviour
     float littime = 5.0f;
     float timer;
 
+    [SerializeField]
     bool playerinside = false;
 
     [Header("God Control")]
@@ -41,6 +42,11 @@ public class Rod : MonoBehaviour
         {
             if(playerinside)
             {
+                if (God.Instance && !FindObjectOfType<Lives>().deathTag.Contains("Lightning"))
+                {
+                    God.Instance.SetText("Death at lightspeed~", true);
+                }
+                
                 FindObjectOfType<Lives>().Death("Lightning");
                 playerinside = false;
             }
@@ -59,7 +65,7 @@ public class Rod : MonoBehaviour
                 if (playerinside && Random.value <= percentchance)
                 {
                     fakelightning.Play();
-                    timer = littime;
+                    timer = lightninginterval;
                     lit = false;
 
                     if (God.Instance)

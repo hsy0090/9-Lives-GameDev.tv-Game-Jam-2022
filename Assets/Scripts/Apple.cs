@@ -68,6 +68,11 @@ public class Apple : MonoBehaviour
         }
         if (activated && collision.gameObject.CompareTag("Player"))
         {
+            if (God.Instance && !FindObjectOfType<Lives>().deathTag.Contains("Apple"))
+            {
+                God.Instance.SetText("Reached enlightenment yet? hehe.", true);
+            }
+
             FindObjectOfType<Lives>().Death("Apple");
         }
         if (activated && (((1 << collision.gameObject.layer) & platformLayerMask) != 0))

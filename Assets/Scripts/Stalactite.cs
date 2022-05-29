@@ -61,6 +61,11 @@ public class Stalactite : MonoBehaviour
         }
         if (activated && collision.gameObject.CompareTag("Player"))
         {
+            if (God.Instance && !FindObjectOfType<Lives>().deathTag.Contains("Stalactite"))
+            {
+                God.Instance.SetText("Looks like it hurt", true);
+            }
+
             FindObjectOfType<Lives>().Death("Stalactite");
         }
         if (activated && (((1 << collision.gameObject.layer) & platformLayerMask) != 0))

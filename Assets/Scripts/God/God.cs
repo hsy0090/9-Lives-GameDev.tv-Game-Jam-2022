@@ -19,6 +19,10 @@ public class God : MonoBehaviour
     float randomtxttime = 10.0f;
     float timer;
     bool displaying;
+    [SerializeField]
+    GameObject potrait;
+    [SerializeField]
+    AudioSource talk;
 
     [Header("Object Control")]
     [SerializeField]
@@ -46,7 +50,9 @@ public class God : MonoBehaviour
     {
         instance = this;
         displaying = false;
+        potrait.SetActive(false);
         godtext.text = "";
+        talk.Stop();
         timer = randomtxttime;
 
         moveobjs = FindObjectsOfType<TimeObj>();
@@ -80,29 +86,32 @@ public class God : MonoBehaviour
             Record();
     }
 
-    public void SetText(string _text)
+    public void SetText(string _text, bool takeover = false)
     {
-        if (displaying)
+        if (displaying && !takeover)
             return;
 
         displaying = true;
         curline = _text;
+        talk.Play();
         StartCoroutine(DisplayText());
     }
 
     IEnumerator DisplayText()
     {
-        for(int i = 0; i < curline.Length; i++)
+        potrait.SetActive(true);
+        for (int i = 0; i < curline.Length; i++)
         {
             display = curline.Substring(0, i+1);
             godtext.text = display;
-            yield return new WaitForSeconds(txtdelay);
+            yield return new WaitForSecondsRealtime(txtdelay);
         }
-
-        yield return new WaitForSeconds(1.5f);
+        talk.Stop();
+        yield return new WaitForSecondsRealtime(1.5f);
         godtext.text = "";
         displaying = false;
         timer = randomtxttime;
+        potrait.SetActive(false);
     }
 
     public void ReverseGravity()

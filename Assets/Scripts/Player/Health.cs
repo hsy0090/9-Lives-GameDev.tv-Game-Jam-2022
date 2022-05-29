@@ -82,7 +82,27 @@ public class Health : MonoBehaviour
                 health -= damage;
                 if (health <= 0)
                 {
-                    Life.GetComponent<Lives>().Death(damagetype);
+                    if (God.Instance && !FindObjectOfType<Lives>().deathTag.Contains(damagetype))
+                    {
+                        switch(damagetype)
+                        {
+                        case "Bullet":
+                            God.Instance.SetText("Don't feed the fishes", true);
+                            break;
+                        case "Reflected Bullet":
+                            God.Instance.SetText("Ah....the betrayal", true);
+                            break;
+                        case "Fire":
+                            God.Instance.SetText("Too hot to handle I guess...", true);
+                            break;
+                        default:
+                            God.Instance.SetText("...", true);
+                            break;
+                        }
+                        
+                    }
+
+                Life.GetComponent<Lives>().Death(damagetype);
                 }
         }
     }

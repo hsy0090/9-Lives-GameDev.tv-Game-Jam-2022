@@ -132,6 +132,11 @@ public class PlayerController : MonoBehaviour
 
             if (idleTimer <= 0)
             {
+                if (God.Instance && !FindObjectOfType<Lives>().deathTag.Contains("Bored to Death"))
+                {
+                    God.Instance.SetText("Here's a free one for you for making me bored.", true);
+                }
+
                 life.GetComponent<Lives>().Death("Bored to Death");
             }
         }
@@ -164,11 +169,15 @@ public class PlayerController : MonoBehaviour
         {
             burnTimer = 0;
         }
+
         if (rb2d.velocity.y > 0)
             Physics2D.IgnoreLayerCollision(playerlayer, platformlayer, true);
 
         else if (rb2d.velocity.y <= 0 && !jumping)
+        {
             Physics2D.IgnoreLayerCollision(playerlayer, platformlayer, false);
+            animator.SetBool("Jumping", false);
+        }
     }
 
     private void FixedUpdate()
@@ -202,6 +211,9 @@ public class PlayerController : MonoBehaviour
             animator.SetBool("LastFacingRight", false);
             animator.SetBool("LastFacingLeft", true);
         }
+
+        if (grounded)
+            animator.SetBool("Falling", false);
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -235,8 +247,12 @@ public class PlayerController : MonoBehaviour
         }
 
         grounded = collision != null && (((1 << collision.gameObject.layer) & platformLayerMask) != 0);
+        
         if (grounded)
             animator.SetBool("Falling", false);
+
+        if (!jumping)
+            animator.SetBool("Jumping", false);
     }
 
     private void OnCollisionStay2D(Collision2D collision)
@@ -257,7 +273,7 @@ public class PlayerController : MonoBehaviour
             transform.position = respawn.transform.position;
 
             if (God.Instance)
-                God.Instance.SetText("Ooh I don't think so");
+                God.Instance.SetText("Ooh I don't think so", true);
         }
 
         if (collision.gameObject.tag == "Water")
