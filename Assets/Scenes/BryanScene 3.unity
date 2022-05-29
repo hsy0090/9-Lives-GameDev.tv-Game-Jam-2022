@@ -8671,7 +8671,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 62}
+  m_AnchoredPosition: {x: 0, y: 259}
   m_SizeDelta: {x: -1760, y: -1050}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &746981284
@@ -8721,8 +8721,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 24
-  m_fontSizeBase: 24
+  m_fontSize: 36
+  m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -8788,7 +8788,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &749164736
 RectTransform:
   m_ObjectHideFlags: 0
@@ -10420,7 +10420,7 @@ MonoBehaviour:
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
   m_Interactable: 1
-  m_TargetGraphic: {fileID: 0}
+  m_TargetGraphic: {fileID: 1047663573}
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
@@ -12055,7 +12055,7 @@ GameObject:
   - component: {fileID: 1236024301}
   m_Layer: 5
   m_Name: GodText
-  m_TagString: Untagged
+  m_TagString: GodText
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -12394,7 +12394,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2720518833351194661, guid: eee6ab198b0d3594ca31dcbce41a963d, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -12.51
+      value: -12.57
       objectReference: {fileID: 0}
     - target: {fileID: 2720518833351194661, guid: eee6ab198b0d3594ca31dcbce41a963d, type: 3}
       propertyPath: m_LocalPosition.z
