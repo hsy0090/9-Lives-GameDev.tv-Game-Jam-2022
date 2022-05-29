@@ -150,12 +150,12 @@ public class PlayerController : MonoBehaviour
         animator.SetFloat("JumpForce", curjumpforce);
         animator.SetFloat("Speed", Mathf.Abs(Input.GetAxis("Horizontal")) * 10);
 
-        if (Input.GetAxis("Horizontal") > 0)
+        if (Input.GetAxis("Horizontal") > 0 && canMove)
         {
             animator.SetBool("LastFacingRight", true);
             animator.SetBool("LastFacingLeft", false);
         }
-        else if (Input.GetAxis("Horizontal") < 0)
+        else if (Input.GetAxis("Horizontal") < 0 && canMove)
         {
             animator.SetBool("LastFacingRight", false);
             animator.SetBool("LastFacingLeft", true);

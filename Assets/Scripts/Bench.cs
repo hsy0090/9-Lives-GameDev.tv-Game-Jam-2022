@@ -77,6 +77,7 @@ public class Bench : MonoBehaviour
         if(affectedObject != null)
             affectedObject.GetComponent<Apple>().StartTimer();
         player.GetComponent<PlayerController>().canMove = false;
+        player.transform.position = new Vector3(gameObject.transform.position.x, player.transform.position.y , player.transform.position.z);
     }
 
     void TriggerOff()
