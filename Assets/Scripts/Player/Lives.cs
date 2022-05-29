@@ -32,14 +32,14 @@ public class Lives : MonoBehaviour
     [SerializeField]
     float LivesGap = 5;
 
-    
-
     [SerializeField]
     GameObject DeathText;
+
     // Start is called before the first frame update
     void Start()
     {
-
+        life = PlayerSave.Instance.life;
+        deathTag = PlayerSave.Instance.deathTag;
     }
 
     // Update is called once per frame
@@ -73,6 +73,12 @@ public class Lives : MonoBehaviour
             DeathPanel.SetActive(true);
             DeathText.GetComponent<TMPro.TextMeshProUGUI>().text = ("Death By: " + deathtype);
             FindObjectOfType<GameManager>().Pause();
+            SavePlayer();
         }
+    }
+    public void SavePlayer()
+    {
+        PlayerSave.Instance.life = life;
+        PlayerSave.Instance.deathTag = deathTag;
     }
 }

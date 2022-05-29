@@ -17,6 +17,8 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     GameObject root;
 
+    [SerializeField]
+    GameObject respawn;
     void Awake()
     {
         instance = this;
@@ -56,6 +58,18 @@ public class GameManager : MonoBehaviour
                     transitobj.onClick.AddListener(delegate { ChangeState(transitobjname.name); });
                 }
                 root.SetActive(false);
+            }
+            if (respawn)
+            {
+                respawn.SetActive(true);
+                transitobjname = GameObject.Find(scenes[i]);
+
+                if (transitobjname)
+                {
+                    Button transitobj = transitobjname.transform.GetComponentInParent<Button>();
+                    transitobj.onClick.AddListener(delegate { ChangeState(transitobjname.name); });
+                }
+                respawn.SetActive(false);
             }
         }
     }
