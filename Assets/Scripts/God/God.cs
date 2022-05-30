@@ -75,6 +75,11 @@ public class God : MonoBehaviour
             timeicon.SetActive(true);
             reversetime = true;
         }
+
+        if(displaying)
+        {
+            potrait.SetActive(true);
+        }
     }
 
     private void FixedUpdate()
