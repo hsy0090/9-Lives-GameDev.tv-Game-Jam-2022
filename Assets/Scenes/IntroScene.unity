@@ -17753,6 +17753,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   platform: {fileID: 471042789}
   player: {fileID: 841865443}
+  playerprevlayer: 0
   view: 0
 --- !u!1 &1085648248
 GameObject:
@@ -63429,7 +63430,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1929036645
 RectTransform:
   m_ObjectHideFlags: 0
