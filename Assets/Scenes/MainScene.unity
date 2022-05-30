@@ -870,8 +870,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 180}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -68, y: 62}
-  m_SizeDelta: {x: 30, y: 30}
+  m_AnchoredPosition: {x: -111, y: 137}
+  m_SizeDelta: {x: 90, y: 90}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &111851224
 MonoBehaviour:
@@ -39905,6 +39905,7 @@ MonoBehaviour:
   - Heh
   txtdelay: 0.1
   randomtxttime: 10
+  displaying: 0
   potrait: {fileID: 1891402123}
   talk: {fileID: 1860824223}
   timeicon: {fileID: 111851222}
