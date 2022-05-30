@@ -32,13 +32,12 @@ public class Health : MonoBehaviour
 
     [SerializeField]
     GameObject Life;
-    // Start is called before the first frame update
+
     void Start()
     {
         health = numOfHearts;
     }
 
-    // Update is called once per frame
     void Update()
     {
         if( health > numOfHearts)
