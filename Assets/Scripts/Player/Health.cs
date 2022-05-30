@@ -76,7 +76,7 @@ public class Health : MonoBehaviour
                 }
                 else
                 {
-                    hearts[i].GetComponent<Image>().sprite = emptyHeart;
+                    hearts[i].GetComponent<Image>().enabled = false;
                 }
 
             }
