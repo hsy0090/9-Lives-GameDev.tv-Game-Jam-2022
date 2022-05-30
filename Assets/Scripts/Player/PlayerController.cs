@@ -320,6 +320,10 @@ public class PlayerController : MonoBehaviour
         onfire = false;
         fire.SetActive(false);
     }
+    public void Resetsave()
+    {
+        FindObjectOfType<PlayerSave>().resetsave();
+    }
 
     IEnumerator Healing()
     {
