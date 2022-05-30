@@ -320,7 +320,7 @@ MonoBehaviour:
   movespeed: 2.5
   path: {fileID: 0}
   Pivot: {fileID: 6126062625174283918}
-  bulletPrefab: {fileID: 1938198363282413897, guid: ba5825a0c2414264bbc10194cb6f51af, type: 3}
+  bulletPrefab: {fileID: 7549932469093863603, guid: 297855cccc796bb488c585f921387b7b, type: 3}
   bulletSpawn: {fileID: 3304751798955568517}
   shootdelay: 5
   Controldisplay: {fileID: 1989546001144959122}
