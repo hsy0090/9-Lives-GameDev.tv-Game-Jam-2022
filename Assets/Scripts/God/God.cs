@@ -18,7 +18,7 @@ public class God : MonoBehaviour
     [SerializeField]
     float randomtxttime = 10.0f;
     float timer;
-    [System.NonSerialized]
+    //[System.NonSerialized]
     public bool displaying;
     [SerializeField]
     GameObject potrait;
@@ -108,7 +108,7 @@ public class God : MonoBehaviour
         displaying = true;
         curline = _text;
         talk.Play();
-        StartCoroutine(DisplayText());
+        StartCoroutine(DisplayText2());
     }
 
     IEnumerator DisplayText()
@@ -117,6 +117,25 @@ public class God : MonoBehaviour
         for (int i = 0; i < curline.Length; i++)
         {
             display = curline.Substring(0, i+1);
+            godtext.text = display;
+            yield return new WaitForSecondsRealtime(txtdelay);
+        }
+        talk.Stop();
+        yield return new WaitForSecondsRealtime(1.5f);
+        godtext.text = "";
+        displaying = false;
+        timer = randomtxttime;
+        potrait.SetActive(false);
+    }
+
+    IEnumerator DisplayText2()
+    {
+        displaying = true;
+        potrait.SetActive(true);
+        for (int i = 0; i < curline.Length; i++)
+        {
+            display = curline.Substring(0, i + 1);
+            displaying = true;
             godtext.text = display;
             yield return new WaitForSecondsRealtime(txtdelay);
         }
