@@ -46,6 +46,8 @@ public class Enemy : MonoBehaviour
     [SerializeField]
     List<Enemy> allies;
 
+    Animator anim;
+
     void Start()
     {
         Controldisplay.SetActive(false);
@@ -56,6 +58,7 @@ public class Enemy : MonoBehaviour
 
         state = States.PATROL;
         shoottimer = shootdelay;
+        anim = GetComponent<Animator>();
     }
 
     void Update()
@@ -64,6 +67,10 @@ public class Enemy : MonoBehaviour
         switch (state) {
 
             case States.IDLE:
+                anim.SetBool("AttackR", false);
+                anim.SetBool("AttackL", false);
+                anim.SetBool("WalkR", false);
+                anim.SetBool("WalkL", false);
                 break;
 
             case States.PATROL:
@@ -88,7 +95,21 @@ public class Enemy : MonoBehaviour
 
     void Patrol()
     {
+        anim.SetBool("AttackR", false);
+        anim.SetBool("AttackL", false);
+
         Vector2 dir = target.position - transform.position;
+
+        if (dir.x > 0)
+        {
+            anim.SetBool("WalkR", true);
+            anim.SetBool("WalkL", false);
+        }
+        else
+        {
+            anim.SetBool("WalkR", false);
+            anim.SetBool("WalkL", true);
+        }
 
         transform.Translate(dir.normalized * movespeed * Time.deltaTime, Space.World);
 
@@ -100,28 +121,54 @@ public class Enemy : MonoBehaviour
 
     void Attack()
     {
+        anim.SetBool("WalkR", false);
+        anim.SetBool("WalkL", false);
+
         shoottimer -= Time.deltaTime;
         Vector2 dir = target.position - transform.position;
 
         float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
         Pivot.rotation = Quaternion.Euler(new Vector3(0, 0, angle));
 
+        if (shoottimer <= 0.5f)
+        {
+            if (dir.x > 0.0f)
+            {
+                anim.SetBool("AttackR", true);
+                anim.SetBool("AttackL", false);
+            }
+            else
+            {
+                anim.SetBool("AttackR", false);
+                anim.SetBool("AttackL", true);
+            }
+        }
+
         if (shoottimer <= 0.0f) {
+
             bullet = Instantiate(bulletPrefab, bulletSpawn.transform.position, bulletSpawn.GetComponentInParent<Transform>().rotation);
             
             dir.Normalize();
             bullet.GetComponent<BulletBehavior>().trajectory = dir;
-            
+            anim.SetBool("AttackR", false);
+            anim.SetBool("AttackL", false);
             shoottimer = shootdelay;
         }
     }
 
     void Controlled()
     {
+        anim.SetBool("WalkR", false);
+        anim.SetBool("WalkL", false);
+
         Controldisplay.SetActive(true);
 
         if (!target && allies.Count <= 0)
+        {
+            anim.SetBool("AttackR", false);
+            anim.SetBool("AttackL", false);
             return;
+        }
 
         for (int i = 0; i < allies.Count; i++)
         {
@@ -132,8 +179,11 @@ public class Enemy : MonoBehaviour
             }
         }
 
-        if (target == null)
+        if (target == null ){
+            anim.SetBool("AttackR", false);
+            anim.SetBool("AttackL", false);
             return;
+        }
 
         shoottimer -= Time.deltaTime;
 
@@ -141,6 +191,20 @@ public class Enemy : MonoBehaviour
 
         float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
         Pivot.rotation = Quaternion.Euler(new Vector3(0, 0, angle));
+
+        if (shoottimer <= 0.5f)
+        {
+            if (dir.x > 0.0f)
+            {
+                anim.SetBool("AttackR", true);
+                anim.SetBool("AttackL", false);
+            }
+            else
+            {
+                anim.SetBool("AttackR", false);
+                anim.SetBool("AttackL", true);
+            }
+        }
 
         if (shoottimer <= 0.0f)
         {
@@ -151,6 +215,8 @@ public class Enemy : MonoBehaviour
             bullet.layer = LayerMask.NameToLayer("PlayerProjectiles");
             bullet.GetComponent<BulletBehavior>().player = true;
             shoottimer = shootdelay;
+            anim.SetBool("AttackR", false);
+            anim.SetBool("AttackL", false);
         }
     }
 
