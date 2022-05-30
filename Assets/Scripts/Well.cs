@@ -10,6 +10,10 @@ public class Well : MonoBehaviour
     GameObject player;
     [SerializeField]
     int playerprevlayer;
+    [SerializeField]
+    GameObject gun;
+    [SerializeField]
+    int gunprevlayer;
 
     public bool view = false;
 
@@ -18,6 +22,9 @@ public class Well : MonoBehaviour
         view = false;
         platform.SetActive(false);
         playerprevlayer = player.GetComponent<SpriteRenderer>().sortingOrder;
+
+        if(gun != null)
+            gunprevlayer = gun.GetComponent<SpriteRenderer>().sortingOrder;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -40,10 +47,16 @@ public class Well : MonoBehaviour
     public void HidePlayerLayer()
     {
         player.GetComponent<SpriteRenderer>().sortingOrder = -5;
+
+        if (gun != null)
+            gun.GetComponent<SpriteRenderer>().sortingOrder = -4;
     }
 
     public void ResetPlayerlayer()
     {
         player.GetComponent<SpriteRenderer>().sortingOrder = playerprevlayer;
+
+        if (gun != null)
+            gun.GetComponent<SpriteRenderer>().sortingOrder = gunprevlayer;
     }
 }

@@ -66770,6 +66770,8 @@ MonoBehaviour:
   platform: {fileID: 471042789}
   player: {fileID: 841865443}
   playerprevlayer: 0
+  gun: {fileID: 2117400547}
+  gunprevlayer: 0
   view: 0
 --- !u!1 &1085648248
 GameObject:
