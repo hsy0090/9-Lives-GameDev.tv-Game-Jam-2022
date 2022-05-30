@@ -31,9 +31,14 @@ public class Lives : MonoBehaviour
     //---------------------------------------------
     [SerializeField]
     float LivesGap = 5;
+    [SerializeField]
+    bool old = false;
 
     [SerializeField]
     GameObject DeathText;
+
+    [SerializeField]
+    Sprite[] img;
 
     // Start is called before the first frame update
     void Start()
@@ -62,19 +67,27 @@ public class Lives : MonoBehaviour
         {
             life = numOfLives;
         }
-        //heart generation and destruction
-        while (numOfLives > lives.Count)
+        if (!old && life <= img.Length && gameObject.GetComponent<Image>().sprite != img[life])
         {
-            Vector3 heartPos = new Vector3(transform.position.x + (LifePrefab.GetComponent<RectTransform>().rect.width + LivesGap) * lives.Count,
-                transform.position.y, transform.position.z);
-            GameObject temp = Instantiate(LifePrefab, heartPos, Quaternion.identity);
-            temp.transform.SetParent(transform);
-            lives.Add(temp);
+            gameObject.GetComponent<Image>().sprite = img[life];
         }
-        while (lives.Count > life)
+        if (old)
         {
-            Destroy(lives[lives.Count - 1]);
-            lives.RemoveAt(lives.Count - 1);
+
+            //heart generation and destruction
+            while (numOfLives > lives.Count)
+            {
+                Vector3 heartPos = new Vector3(transform.position.x + (LifePrefab.GetComponent<RectTransform>().rect.width + LivesGap) * lives.Count,
+                    transform.position.y, transform.position.z);
+                GameObject temp = Instantiate(LifePrefab, heartPos, Quaternion.identity);
+                temp.transform.SetParent(transform);
+                lives.Add(temp);
+            }
+            while (lives.Count > life)
+            {
+                Destroy(lives[lives.Count - 1]);
+                lives.RemoveAt(lives.Count - 1);
+            }
         }
     }
     public void Death(string deathtype)
@@ -87,6 +100,7 @@ public class Lives : MonoBehaviour
             DeathText.GetComponent<TMPro.TextMeshProUGUI>().text = ("Death By: " + deathtype);
             FindObjectOfType<GameManager>().Pause();
             SavePlayer();
+
         }
     }
     public void SavePlayer()

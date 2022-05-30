@@ -19,37 +19,67 @@ public class AmmoControl : MonoBehaviour
     public List<GameObject> Magazine = new List<GameObject>();
     public List<GameObject> MagazineSlot = new List<GameObject>();
     public int currentSlot = 0;
-
+    public bool old = false;
+    public int ammocount = 0;
     //---------------------------------------------
     // PRIVATE [SF], SHOW in unity inspector
     //---------------------------------------------
 
+
+    [SerializeField]
+    Sprite[] img;
     // Start is called before the first frame update
     void Start()
     {
-        while(Magazine.Count < 6)
+        if (old)
         {
-            Magazine.Add(null);
+            while (Magazine.Count < 6)
+            {
+                Magazine.Add(null);
+            }
+            for (int i = 0; i < Magazine.Count; i++)
+            {
+                if (Magazine[i] == null)
+                {
+                    MagazineSlot[i].GetComponent<Image>().enabled = false;
+                }
+            }
         }
-        for(int i = 0; i < Magazine.Count; i++)
+        else
         {
-            if(Magazine[i] == null)
+            for (int i = 0; i < Magazine.Count; i++)
+            {
+                if (Magazine[i] != null)
+                {
+                    ammocount++;
+                }
+            }
+            for (int i = 0; i < 6; i++)
             {
                 MagazineSlot[i].GetComponent<Image>().enabled = false;
             }
         }
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Magazine.Count > 6)
+        if(old)
         {
-            Magazine.RemoveRange(6, Magazine.Count - 6);
+            if (Magazine.Count > 6)
+            {
+                Magazine.RemoveRange(6, Magazine.Count - 6);
+            }
+
         }
-        if(currentSlot > 5)
+        if (currentSlot > Magazine.Count - 1)
         {
             currentSlot = 0;
+        }
+        if (!old && ammocount <= img.Length && gameObject.GetComponent<Image>().sprite != img[ammocount])
+        {
+            gameObject.GetComponent<Image>().sprite = img[ammocount];
         }
     }
 }

@@ -72,8 +72,13 @@ public class GunControl : MonoBehaviour
                     barrel.Play("Shoot");
 
                     Controller.GetComponent<AmmoControl>().Magazine[Controller.GetComponent<AmmoControl>().currentSlot] = null;
-                    Controller.GetComponent<AmmoControl>().MagazineSlot[Controller.GetComponent<AmmoControl>()
-                        .currentSlot].GetComponent<Image>().enabled = false;
+                    Controller.GetComponent<AmmoControl>().ammocount--;
+                    if (Controller.GetComponent<AmmoControl>().old)
+                    {
+                        Controller.GetComponent<AmmoControl>().MagazineSlot[Controller.GetComponent<AmmoControl>()
+                            .currentSlot].GetComponent<Image>().enabled = false;
+                    }
+
                     //RemoveAt(Controller.GetComponent<AmmoControl>().currentSlot);
 
                     trajectory = mousePos.normalized;
@@ -82,7 +87,11 @@ public class GunControl : MonoBehaviour
                     Fired = true;
                 }
                 Controller.GetComponent<AmmoControl>().currentSlot++;
-                Controller.transform.rotation = Quaternion.Euler(new Vector3(0, 0, Controller.transform.rotation.eulerAngles.z - 60));
+                if (Controller.GetComponent<AmmoControl>().old)
+                {
+                    Controller.transform.rotation = Quaternion.Euler(new Vector3(0, 0, Controller.transform.rotation.eulerAngles.z - 60));
+                }
+
             }
             else if (Input.GetMouseButtonUp(0) && Fired)
             {
