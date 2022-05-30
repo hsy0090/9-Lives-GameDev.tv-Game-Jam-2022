@@ -109,6 +109,11 @@ public class GameManager : MonoBehaviour
         SceneManager.LoadScene(name);
     }
 
+    public string GetCurrentSceneName()
+    {
+        return SceneManager.GetActiveScene().name;
+    }
+
     private void OnDestroy()
     {
         SceneManager.sceneLoaded -= OnSceneLoaded;

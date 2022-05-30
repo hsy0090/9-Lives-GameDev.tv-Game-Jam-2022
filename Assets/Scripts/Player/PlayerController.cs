@@ -282,6 +282,10 @@ public class PlayerController : MonoBehaviour
             fire.SetActive(false);
         }
 
+        if (collision.gameObject.tag == "Truck")
+        {
+            FindObjectOfType<Lives>().Death("TruckKun");
+        }
     }
 
     IEnumerator Jump()

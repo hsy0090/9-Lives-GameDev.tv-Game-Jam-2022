@@ -10,6 +10,7 @@ TagManager:
   - Bullet
   - Lightning
   - Fire Bullet
+  - Truck
   layers:
   - Default
   - TransparentFX

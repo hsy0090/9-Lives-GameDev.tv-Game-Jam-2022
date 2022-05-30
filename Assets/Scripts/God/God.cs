@@ -98,6 +98,14 @@ public class God : MonoBehaviour
         StartCoroutine(DisplayText());
     }
 
+    public void SetTextButton(string _text)
+    {
+        displaying = true;
+        curline = _text;
+        talk.Play();
+        StartCoroutine(DisplayText());
+    }
+
     IEnumerator DisplayText()
     {
         potrait.SetActive(true);

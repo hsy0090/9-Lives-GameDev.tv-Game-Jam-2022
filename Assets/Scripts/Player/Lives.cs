@@ -58,6 +58,10 @@ public class Lives : MonoBehaviour
             Player.GetComponent<PlayerController>().Teleport3.GetComponent<Teleporter>().ActivatePortal();
         }
 
+        if (life == 5 && GameManager.Instance && GameManager.Instance.GetCurrentSceneName() != "OutroScene")
+        {
+            GameManager.Instance.ChangeState("OutroScene");
+        }
     }
 
     // Update is called once per frame
@@ -100,7 +104,6 @@ public class Lives : MonoBehaviour
             DeathText.GetComponent<TMPro.TextMeshProUGUI>().text = ("Death By: " + deathtype);
             FindObjectOfType<GameManager>().Pause();
             SavePlayer();
-
         }
     }
     public void SavePlayer()

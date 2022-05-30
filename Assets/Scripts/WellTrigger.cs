@@ -22,6 +22,8 @@ public class WellTrigger : MonoBehaviour
         {
             block.layer = LayerMask.NameToLayer("Platform");
             block.SetActive(false);
+
+            well.HidePlayerLayer();
         }
     }
 
@@ -32,6 +34,7 @@ public class WellTrigger : MonoBehaviour
             block.layer = LayerMask.NameToLayer("Ground");
             block.SetActive(true);
             well.view = false;
+            well.ResetPlayerlayer();
         }
     }
 }

@@ -23,9 +23,16 @@ public class GodTriggers : MonoBehaviour
 
     [SerializeField]
     bool queue = false;
-
     int id = 0;
 
+    [Header("Cutscenes")]
+    [SerializeField]
+    bool intro;
+    [SerializeField]
+    bool outro;
+    [SerializeField]
+    GameObject panel;
+    
     void Start()
     {
         playerinside = false;
@@ -50,6 +57,19 @@ public class GodTriggers : MonoBehaviour
                     {
                         God.Instance.SetText(text[id]);
                         id++;
+                    }
+                    else
+                    {
+                        if(id >= text.Length && intro)
+                        {
+                            Intro();
+                        }
+                        else if (id >= text.Length && outro)
+                        {
+                            panel.SetActive(true);
+                            Destroy(gameObject);
+                        }
+                        
                     }
                 }
 
@@ -83,5 +103,15 @@ public class GodTriggers : MonoBehaviour
         {
             playerinside = false;
         }
+    }
+
+    void Intro()
+    {
+        FindObjectOfType<Lives>().Death("Falling");
+    }
+
+    void End()
+    {
+        FindObjectOfType<Lives>().Death("TruckKun");
     }
 }
