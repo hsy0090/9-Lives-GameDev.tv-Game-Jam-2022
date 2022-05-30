@@ -18363,9 +18363,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   text:
   - Ooh its a spec.....door
+  playerinside: 0
   loop: 0
   speechtime: 5
   speechtimer: 0
+  queue: 0
 --- !u!4 &1121343543 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 9209262585352046582, guid: e19e7ea5a03bc9b4bb9e7582f42dba5a, type: 3}
@@ -30693,9 +30695,11 @@ MonoBehaviour:
   text:
   - ...
   - Hmm
+  playerinside: 0
   loop: 0
   speechtime: 5
   speechtimer: 0
+  queue: 0
 --- !u!61 &1427102556
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -32592,16 +32596,6 @@ Tilemap:
       m_TileObjectToInstantiateIndex: 65535
       dummyAlignment: 0
       m_AllTileFlags: 1073741825
-  - first: {x: 24, y: -28, z: 0}
-    second:
-      serializedVersion: 2
-      m_TileIndex: 13
-      m_TileSpriteIndex: 13
-      m_TileMatrixIndex: 0
-      m_TileColorIndex: 0
-      m_TileObjectToInstantiateIndex: 65535
-      dummyAlignment: 0
-      m_AllTileFlags: 1073741825
   - first: {x: 22, y: -27, z: 0}
     second:
       serializedVersion: 2
@@ -32615,8 +32609,8 @@ Tilemap:
   - first: {x: 23, y: -27, z: 0}
     second:
       serializedVersion: 2
-      m_TileIndex: 13
-      m_TileSpriteIndex: 13
+      m_TileIndex: 15
+      m_TileSpriteIndex: 15
       m_TileMatrixIndex: 0
       m_TileColorIndex: 0
       m_TileObjectToInstantiateIndex: 65535
@@ -32635,8 +32629,8 @@ Tilemap:
   - first: {x: 22, y: -26, z: 0}
     second:
       serializedVersion: 2
-      m_TileIndex: 13
-      m_TileSpriteIndex: 13
+      m_TileIndex: 15
+      m_TileSpriteIndex: 15
       m_TileMatrixIndex: 0
       m_TileColorIndex: 0
       m_TileObjectToInstantiateIndex: 65535
@@ -32655,8 +32649,8 @@ Tilemap:
   - first: {x: 21, y: -25, z: 0}
     second:
       serializedVersion: 2
-      m_TileIndex: 13
-      m_TileSpriteIndex: 13
+      m_TileIndex: 15
+      m_TileSpriteIndex: 15
       m_TileMatrixIndex: 0
       m_TileColorIndex: 0
       m_TileObjectToInstantiateIndex: 65535
@@ -32675,8 +32669,8 @@ Tilemap:
   - first: {x: 20, y: -24, z: 0}
     second:
       serializedVersion: 2
-      m_TileIndex: 13
-      m_TileSpriteIndex: 13
+      m_TileIndex: 15
+      m_TileSpriteIndex: 15
       m_TileMatrixIndex: 0
       m_TileColorIndex: 0
       m_TileObjectToInstantiateIndex: 65535
@@ -32695,8 +32689,8 @@ Tilemap:
   - first: {x: 19, y: -23, z: 0}
     second:
       serializedVersion: 2
-      m_TileIndex: 13
-      m_TileSpriteIndex: 13
+      m_TileIndex: 15
+      m_TileSpriteIndex: 15
       m_TileMatrixIndex: 0
       m_TileColorIndex: 0
       m_TileObjectToInstantiateIndex: 65535
@@ -32715,8 +32709,8 @@ Tilemap:
   - first: {x: 18, y: -22, z: 0}
     second:
       serializedVersion: 2
-      m_TileIndex: 13
-      m_TileSpriteIndex: 13
+      m_TileIndex: 15
+      m_TileSpriteIndex: 15
       m_TileMatrixIndex: 0
       m_TileColorIndex: 0
       m_TileObjectToInstantiateIndex: 65535
@@ -32975,8 +32969,8 @@ Tilemap:
   - first: {x: 17, y: -21, z: 0}
     second:
       serializedVersion: 2
-      m_TileIndex: 13
-      m_TileSpriteIndex: 13
+      m_TileIndex: 15
+      m_TileSpriteIndex: 15
       m_TileMatrixIndex: 0
       m_TileColorIndex: 0
       m_TileObjectToInstantiateIndex: 65535
@@ -33015,8 +33009,8 @@ Tilemap:
   - first: {x: 16, y: -20, z: 0}
     second:
       serializedVersion: 2
-      m_TileIndex: 13
-      m_TileSpriteIndex: 13
+      m_TileIndex: 15
+      m_TileSpriteIndex: 15
       m_TileMatrixIndex: 0
       m_TileColorIndex: 0
       m_TileObjectToInstantiateIndex: 65535
@@ -33065,8 +33059,8 @@ Tilemap:
   - first: {x: 15, y: -19, z: 0}
     second:
       serializedVersion: 2
-      m_TileIndex: 13
-      m_TileSpriteIndex: 13
+      m_TileIndex: 15
+      m_TileSpriteIndex: 15
       m_TileMatrixIndex: 0
       m_TileColorIndex: 0
       m_TileObjectToInstantiateIndex: 65535
@@ -33215,8 +33209,8 @@ Tilemap:
   - first: {x: 14, y: -18, z: 0}
     second:
       serializedVersion: 2
-      m_TileIndex: 13
-      m_TileSpriteIndex: 13
+      m_TileIndex: 15
+      m_TileSpriteIndex: 15
       m_TileMatrixIndex: 0
       m_TileColorIndex: 0
       m_TileObjectToInstantiateIndex: 65535
@@ -33890,12 +33884,12 @@ Tilemap:
     m_Data: {fileID: 0}
   - m_RefCount: 88
     m_Data: {fileID: 11400000, guid: 4e4e3e1290039b04e90d90285c937177, type: 2}
-  - m_RefCount: 11
-    m_Data: {fileID: 11400000, guid: 0165b173f7718f54390746adadb0fc69, type: 2}
   - m_RefCount: 0
     m_Data: {fileID: 0}
   - m_RefCount: 0
     m_Data: {fileID: 0}
+  - m_RefCount: 10
+    m_Data: {fileID: 11400000, guid: dce5ab8c4e470f4448013696aff3cc61, type: 2}
   - m_RefCount: 1
     m_Data: {fileID: 11400000, guid: baa3a4688839dd44383c2195343f7511, type: 2}
   - m_RefCount: 1
@@ -33927,18 +33921,18 @@ Tilemap:
     m_Data: {fileID: 0}
   - m_RefCount: 88
     m_Data: {fileID: -217074077, guid: 3507ca2855cb0ef42b04ed06023c41ac, type: 3}
-  - m_RefCount: 11
-    m_Data: {fileID: 989856024, guid: 155fb0db06e001d44b44aa0f063d0e6c, type: 3}
   - m_RefCount: 0
     m_Data: {fileID: 0}
   - m_RefCount: 0
     m_Data: {fileID: 0}
+  - m_RefCount: 10
+    m_Data: {fileID: -142838224, guid: 43ae4ba0a13d96f439c2dc79eac1eb7c, type: 3}
   - m_RefCount: 1
     m_Data: {fileID: -680186003, guid: b26357bc8f14a2045942d115fed5bfb9, type: 3}
   - m_RefCount: 1
     m_Data: {fileID: 1867221816, guid: b26357bc8f14a2045942d115fed5bfb9, type: 3}
   m_TileMatrixArray:
-  - m_RefCount: 183
+  - m_RefCount: 182
     m_Data:
       e00: 1
       e01: 0
@@ -33957,7 +33951,7 @@ Tilemap:
       e32: 0
       e33: 1
   m_TileColorArray:
-  - m_RefCount: 183
+  - m_RefCount: 182
     m_Data: {r: 1, g: 1, b: 1, a: 1}
   m_TileObjectToInstantiateArray: []
   m_AnimationFrameRate: 1
@@ -34407,9 +34401,11 @@ MonoBehaviour:
   - You know its not happening right
   - Ooh Truckkun I summon thee.....Just kidding
   - Lets go already
+  playerinside: 0
   loop: 1
   speechtime: 10
   speechtimer: 0
+  queue: 0
 --- !u!1 &1685814424
 GameObject:
   m_ObjectHideFlags: 0
