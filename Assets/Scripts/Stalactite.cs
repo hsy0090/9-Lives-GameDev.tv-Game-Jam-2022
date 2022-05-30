@@ -28,7 +28,7 @@ public class Stalactite : MonoBehaviour
     [SerializeField]
     [Range(0.0f, 1.0f)]
     float percentchance = 0.5f;
-    bool isControlled = false;
+    //bool isControlled = false;
 
     void Start()
     {
@@ -37,14 +37,14 @@ public class Stalactite : MonoBehaviour
 
     public void Controlled()
     {
-        isControlled = true;
+        //isControlled = true;
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Bullet"))
         {
             if (Random.value <= percentchance) { 
-                isControlled = true;
+                //isControlled = true;
                 Destroy(gameObject);
 
                 if(God.Instance)
