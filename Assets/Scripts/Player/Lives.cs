@@ -58,10 +58,7 @@ public class Lives : MonoBehaviour
             Player.GetComponent<PlayerController>().Teleport3.GetComponent<Teleporter>().ActivatePortal();
         }
 
-        if (life == 1 && GameManager.Instance && GameManager.Instance.GetCurrentSceneName() != "OutroScene")
-        {
-            GameManager.Instance.ChangeState("OutroScene");
-        }
+
     }
 
     // Update is called once per frame

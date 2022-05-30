@@ -310,6 +310,14 @@ public class PlayerController : MonoBehaviour
         animator.SetBool("Sitting", false);
         animator.SetBool("Falling", false);
         animator.SetBool("Jumping", false);
+        if (life.GetComponent<Lives>().life == 1 && GameManager.Instance && GameManager.Instance.GetCurrentSceneName() != "OutroScene")
+        {
+            GameManager.Instance.ChangeState("OutroScene");
+        }
+        else
+        {
+            GameManager.Instance.ChangeState("MainScene");
+        }
     }
 
     void Heal()
