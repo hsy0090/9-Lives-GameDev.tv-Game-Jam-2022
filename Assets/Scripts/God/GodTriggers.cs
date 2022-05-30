@@ -7,6 +7,7 @@ public class GodTriggers : MonoBehaviour
     [SerializeField]
     string[] text;
 
+    [SerializeField]
     bool playerinside = false;
 
     [Header("Timer")]
@@ -20,11 +21,17 @@ public class GodTriggers : MonoBehaviour
     [SerializeField]
     float speechtimer;
 
+    [SerializeField]
+    bool queue = false;
+
+    int id = 0;
+
     void Start()
     {
         playerinside = false;
         speechtimer = speechtime;
         done = false;
+        id = 0;
     }
 
     void Update()
@@ -35,8 +42,16 @@ public class GodTriggers : MonoBehaviour
 
             if(speechtimer <= 0.0f)
             {
-                if (God.Instance)
+                if (God.Instance && !queue)
                     God.Instance.SetText(text[Random.Range(0, text.Length)]);
+                else
+                {
+                    if (God.Instance && id < text.Length && !God.Instance.displaying)
+                    {
+                        God.Instance.SetText(text[id]);
+                        id++;
+                    }
+                }
 
                 speechtimer = speechtime;
             }
@@ -50,8 +65,13 @@ public class GodTriggers : MonoBehaviour
             if (!loop)
                 done = true;
 
-            if (God.Instance)
+            if (God.Instance && !queue)
                 God.Instance.SetText(text[Random.Range(0, text.Length)]);
+            else
+            {
+                God.Instance.SetText(text[id]);
+                id++;
+            }
 
             playerinside = true;
         }

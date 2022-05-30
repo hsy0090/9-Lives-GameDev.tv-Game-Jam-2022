@@ -18,7 +18,8 @@ public class God : MonoBehaviour
     [SerializeField]
     float randomtxttime = 10.0f;
     float timer;
-    bool displaying;
+    [System.NonSerialized]
+    public bool displaying;
     [SerializeField]
     GameObject potrait;
     [SerializeField]
