@@ -50144,6 +50144,7 @@ MonoBehaviour:
   - Well...No worries you still have 8 more lives
   - Try not to die anymore...
   - I'll make sure you don't waste them :)
+  - O'ya you can't die to what killed you
   playerinside: 0
   loop: 1
   speechtime: 3
