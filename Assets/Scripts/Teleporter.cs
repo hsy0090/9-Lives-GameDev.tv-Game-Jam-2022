@@ -73,11 +73,11 @@ public class Teleporter : MonoBehaviour
             {
                 TeleportActivated = true;
             }
-            if (UpTeleporter != null)
+            if (UpTeleporter != null && UpTeleporter.GetComponent<Teleporter>().GetStatus())
             {
                 UpTeleportIcon.GetComponent<SpriteRenderer>().enabled = true;
             }
-            if (DownTeleporter != null)
+            if (DownTeleporter != null && DownTeleporter.GetComponent<Teleporter>().GetStatus())
             {
                 DownTeleportIcon.GetComponent<SpriteRenderer>().enabled = true;
             }
