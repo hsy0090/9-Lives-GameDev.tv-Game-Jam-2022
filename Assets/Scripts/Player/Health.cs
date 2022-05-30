@@ -32,6 +32,12 @@ public class Health : MonoBehaviour
 
     [SerializeField]
     GameObject Life;
+
+    [SerializeField]
+    bool old = false;
+
+    [SerializeField]
+    Sprite[] img;
     // Start is called before the first frame update
     void Start()
     {
@@ -45,34 +51,42 @@ public class Health : MonoBehaviour
         {
             health = numOfHearts;
         }
-        //heart generation and destruction
-        while(numOfHearts > hearts.Count)
+        if (old)
         {
-            Vector3 heartPos = new Vector3(transform.position.x + (heartPrefab.GetComponent<RectTransform>().rect.width + HeartGap) * hearts.Count,
-                transform.position.y, transform.position.z);
-            GameObject temp = Instantiate(heartPrefab, heartPos, Quaternion.identity);
-            temp.transform.SetParent(transform);
-            hearts.Add(temp);
-        }
-        while(hearts.Count > numOfHearts)
-        {
-            Destroy(hearts[hearts.Count - 1]);
-            hearts.RemoveAt(hearts.Count - 1);
-        }
-        //hp check
-        for (int i = 0; i < hearts.Count; i++)
-        {
-            if (i < health)
+            //heart generation and destruction
+            while (numOfHearts > hearts.Count)
             {
-
-                hearts[i].GetComponent<Image>().sprite = fullHeart;
+                Vector3 heartPos = new Vector3(transform.position.x + (heartPrefab.GetComponent<RectTransform>().rect.width + HeartGap) * hearts.Count,
+                    transform.position.y, transform.position.z);
+                GameObject temp = Instantiate(heartPrefab, heartPos, Quaternion.identity);
+                temp.transform.SetParent(transform);
+                hearts.Add(temp);
             }
-            else
+            while (hearts.Count > numOfHearts)
             {
-                hearts[i].GetComponent<Image>().sprite = emptyHeart;
+                Destroy(hearts[hearts.Count - 1]);
+                hearts.RemoveAt(hearts.Count - 1);
             }
+            //hp check
+            for (int i = 0; i < hearts.Count; i++)
+            {
+                if (i < health)
+                {
 
+                    hearts[i].GetComponent<Image>().sprite = fullHeart;
+                }
+                else
+                {
+                    hearts[i].GetComponent<Image>().sprite = emptyHeart;
+                }
+
+            }
         }
+        else if (!old && health <= img.Length && gameObject.GetComponent<Image>().sprite != img[health])
+        {
+            gameObject.GetComponent<Image>().sprite = img[health];
+        }
+
 
     }
     public void dealDamage(int damage, string damagetype)

@@ -560,3 +560,15 @@ MonoBehaviour:
   - {fileID: 5964364168637751170}
   - {fileID: 3310390905358446597}
   currentSlot: 0
+  old: 0
+  ammocount: 0
+  img:
+  - {fileID: 21300000, guid: 48b7d560c6ca32248958d74784aa67a0, type: 3}
+  - {fileID: 21300000, guid: 33c9743955801c8428f820107d883c46, type: 3}
+  - {fileID: 21300000, guid: 92c9631a8b8828449a3c6bb485f5083f, type: 3}
+  - {fileID: 21300000, guid: a04917c0f1cc9794ba4f9286410283e3, type: 3}
+  - {fileID: 21300000, guid: a1947a0812362fb49babb45531d4841c, type: 3}
+  - {fileID: 21300000, guid: ec4ef4528c0d3f54d968e179ad6f8aa0, type: 3}
+  - {fileID: 21300000, guid: a6faa018c334cb14b95b4162d19baee7, type: 3}
+  - {fileID: 21300000, guid: c4d6a6e2c88cc944094e9fdd2c8d61b4, type: 3}
+  - {fileID: 21300000, guid: 5b9b8c6867b5f90449b7a7cd91f519b7, type: 3}
