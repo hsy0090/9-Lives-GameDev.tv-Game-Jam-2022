@@ -39894,7 +39894,7 @@ MonoBehaviour:
   health: {fileID: 2138603001}
   DeathPanel: {fileID: 749164735}
   deathTag: []
-  LivesGap: -10
+  LivesGap: -6.6
   old: 1
   DeathText: {fileID: 535979766}
   img:
@@ -83097,7 +83097,7 @@ MonoBehaviour:
   heartPrefab: {fileID: 1509490727123264764, guid: f4a01c58817cad54998b1254492970ad, type: 3}
   fullHeart: {fileID: 21300000, guid: 8601c43062b48ac479d6ddade327b41e, type: 3}
   emptyHeart: {fileID: 21300000, guid: 3b47aa40d328a334b84bb220487b4091, type: 3}
-  HeartGap: -17.5
+  HeartGap: -14.5
   Life: {fileID: 1279547515}
   old: 1
   img:
