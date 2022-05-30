@@ -30984,7 +30984,7 @@ MonoBehaviour:
   - Hmm
   - Ooh
   - Heh
-  txtdelay: 0.1
+  txtdelay: 0.05
   randomtxttime: 10
   displaying: 0
   potrait: {fileID: 1891402123}
