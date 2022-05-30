@@ -8,7 +8,7 @@ public class BulletBehavior : MonoBehaviour
     // PUBLIC [S.NS], NOT in unity inspector         
     //---------------------------------------------
     [System.NonSerialized]
-    public float BulletSpeed = 5;
+    public float BulletSpeed = 10;
 
     [System.NonSerialized]
     public Vector3 trajectory;

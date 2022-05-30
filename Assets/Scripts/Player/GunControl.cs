@@ -71,8 +71,8 @@ public class GunControl : MonoBehaviour
 
                     barrel.Play("Shoot");
 
-                    Controller.GetComponent<AmmoControl>().Magazine[Controller.GetComponent<AmmoControl>().currentSlot] = null;
-                    Controller.GetComponent<AmmoControl>().ammocount--;
+                    /*Controller.GetComponent<AmmoControl>().Magazine[Controller.GetComponent<AmmoControl>().currentSlot] = null;
+                    Controller.GetComponent<AmmoControl>().ammocount--;*/
                     if (Controller.GetComponent<AmmoControl>().old)
                     {
                         Controller.GetComponent<AmmoControl>().MagazineSlot[Controller.GetComponent<AmmoControl>()
